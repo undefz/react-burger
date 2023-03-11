@@ -2,6 +2,7 @@ import React from 'react';
 import AppHeader from "../app-header/app-header";
 import BurgerTwopanels from "../burger-twopanels/burger-twopanels";
 import styles from "./app.module.css";
+import {REMOTE_URL} from "../../utils/AppConfig"
 
 const App = () => {
     const [state, setState] = React.useState({
@@ -12,7 +13,7 @@ const App = () => {
 
     React.useEffect(() => {
         setState({...state, hasError: false, isLoading: true});
-        fetch("https://norma.nomoreparties.space/api/ingredients")
+        fetch(REMOTE_URL)
             .then(res => res.json())
             .then(loaded => setState({data: loaded.data, isLoading: false, hasError: !loaded.success}))
             .catch(_ => {

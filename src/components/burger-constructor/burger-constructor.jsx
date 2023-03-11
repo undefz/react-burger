@@ -4,6 +4,7 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
+import {INGREDIENTS_ARRAY} from "../../utils/BurgerPropTypes";
 
 export const BurgerConstructor = ({ingredients}) => {
     const [showModal, setShowModal] = useState(false);
@@ -47,6 +48,10 @@ export const BurgerConstructor = ({ingredients}) => {
         </div>
 
     )
+}
+
+BurgerConstructor.propTypes = {
+    ingredients: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerConstructor;

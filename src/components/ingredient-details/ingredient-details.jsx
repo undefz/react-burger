@@ -1,4 +1,5 @@
 import styles from "./ingredient-details.module.css"
+import {INGREDIENT} from "../../utils/BurgerPropTypes";
 
 const IngredientDetails = ({ingredient}) => {
     return (
@@ -23,6 +24,10 @@ const IngredientField = ({name, value}) => {
             <p className={styles.ingredientFieldNumber}>{value}</p>
         </div>
     );
+}
+
+IngredientDetails.propTypes = {
+    ingredient: INGREDIENT.isRequired
 }
 
 export default IngredientDetails;

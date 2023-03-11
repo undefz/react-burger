@@ -3,6 +3,8 @@ import styles from "./ingredients-item.module.css"
 import React from "react";
 import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
+import {INGREDIENT} from "../../../utils/BurgerPropTypes";
+import PropTypes from "prop-types";
 
 export const IngredientItem = ({item, count}) => {
     const [showModal, setShowModal] = React.useState(false);
@@ -34,4 +36,9 @@ export const IngredientItem = ({item, count}) => {
             )}
         </div>
     )
+}
+
+IngredientItem.propTypes = {
+    item: INGREDIENT.isRequired,
+    count: PropTypes.number.isRequired
 }

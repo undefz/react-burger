@@ -1,6 +1,8 @@
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import styles from "./constructor-ingredient.module.css"
+import PropTypes from "prop-types";
+import {INGREDIENT} from "../../../utils/BurgerPropTypes";
 
 
 const ConstructorIngredient = ({ingredient, type}) => {
@@ -22,6 +24,11 @@ const ConstructorIngredient = ({ingredient, type}) => {
 
         );
 
+}
+
+ConstructorIngredient.propTypes = {
+    ingredient: INGREDIENT.isRequired,
+    type: PropTypes.oneOf(["top", "bottom"])
 }
 
 export default ConstructorIngredient;

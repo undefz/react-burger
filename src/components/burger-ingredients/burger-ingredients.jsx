@@ -2,12 +2,8 @@ import React, {useRef, useState} from "react";
 import styles from "./burger-ingredients.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientsList} from "./ingredients-list/ingredients-list";
-
-const INGREDIENT_TYPES = {
-    "bun": "Булки",
-    "sauce": "Соусы",
-    "main": "Начинки"
-}
+import {INGREDIENT_NAMES} from "../../utils/AppConfig";
+import {INGREDIENTS_ARRAY} from "../../utils/BurgerPropTypes";
 
 export const BurgerIngredients = ({ingredients}) => {
     const [currentTab, setCurrentTab] = useState("bun");
@@ -29,7 +25,7 @@ export const BurgerIngredients = ({ingredients}) => {
                 <h1 className={styles.sectionHeader}>Соберите бургер</h1>
                 <div className={styles.tabList}>
                     {
-                        Object.entries(INGREDIENT_TYPES).map(([key, value]) =>
+                        Object.entries(INGREDIENT_NAMES).map(([key, value]) =>
                             <Tab key={key}
                                  active={currentTab === key}
                                  value={key}
@@ -41,8 +37,8 @@ export const BurgerIngredients = ({ingredients}) => {
                 </div>
                 <div className={styles.listContainer}>
                     {
-                        Object.entries(INGREDIENT_TYPES).map(([key, value]) => {
-                            var filtered = ingredients
+                        Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
+                            const filtered = ingredients
                                 .filter(e => e.type === key);
                             return (<IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
                         })
@@ -51,6 +47,10 @@ export const BurgerIngredients = ({ingredients}) => {
             </section>
         </>
     );
+}
+
+BurgerIngredients.propTypes = {
+    ingredients: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerIngredients;

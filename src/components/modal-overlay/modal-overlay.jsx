@@ -1,4 +1,6 @@
 import styles from "./modal-overlay.module.css";
+import {CHILDREN} from "../../utils/BurgerPropTypes";
+import PropTypes from "prop-types";
 
 const ModalOverlay = ({closeModal, children}) => {
     return (
@@ -7,5 +9,10 @@ const ModalOverlay = ({closeModal, children}) => {
         </div>
     );
 };
+
+ModalOverlay.propTypes = {
+    children: CHILDREN,
+    closeModal: PropTypes.func.isRequired
+}
 
 export default ModalOverlay;
