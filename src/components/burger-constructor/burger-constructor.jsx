@@ -17,9 +17,9 @@ export const BurgerConstructor = ({ingredients}) => {
 
     const bun = ingredients.filter(e => e.type === "bun")[0];
 
-    let total = 500;
-
     let otherIngredients = ingredients.filter(e => e.type !== "bun")
+
+    let total = bun.price * 2 + otherIngredients.map(e => e.price).reduce((a, b) => a + b, 0);
 
     return (
         <div className="mt-25">

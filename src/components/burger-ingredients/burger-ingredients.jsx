@@ -33,9 +33,10 @@ export const BurgerIngredients = ({ingredients}) => {
                             <Tab key={key}
                                  active={currentTab === key}
                                  value={key}
-                                 onClick={onTabClick}
-                                 ref={typesRefs[key]}
-                            >{value}</Tab>)
+                                 onClick={onTabClick}>
+                                {value}
+                            </Tab>
+                        )
                     }
                 </div>
                 <div className={styles.listContainer}>
@@ -43,7 +44,7 @@ export const BurgerIngredients = ({ingredients}) => {
                         Object.entries(INGREDIENT_TYPES).map(([key, value]) => {
                             var filtered = ingredients
                                 .filter(e => e.type === key);
-                            return (<IngredientsList header={value} ingredientsList={filtered}/>);
+                            return (<IngredientsList header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
                         })
                     }
                 </div>
