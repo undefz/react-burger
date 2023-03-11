@@ -5,14 +5,17 @@ import PropTypes from "prop-types";
 import {INGREDIENT} from "../../../utils/burger-prop-types";
 
 
-const ConstructorIngredient = ({ingredient, type}) => {
-    let name = ingredient.name;
+const basketName = (name, type) => {
     if (type === "top") {
-        name += " (верх)";
+        return name + " (верх)";
     }
     if (type === "bottom") {
-        name += " (низ)";
+        return name + " (низ)";
     }
+    return name;
+}
+const ConstructorIngredient = ({ingredient, type}) => {
+    const name = basketName(ingredient.name, type);
 
     const isLocked = type === "top" || type === "bottom";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from "../app-header/app-header";
-import BurgerTwopanels from "../burger-twopanels/burger-twopanels";
+import Main from "../main/main";
 import styles from "./app.module.css";
 import {REMOTE_URL} from "../../utils/app-config"
 import {generateBasket} from "../../utils/utils";
@@ -15,8 +15,19 @@ const App = () => {
     React.useEffect(() => {
         setState({...state, hasError: false, isLoading: true});
         fetch(REMOTE_URL)
-            .then(res => res.json())
-            .then(loaded => setState({data: loaded.data, isLoading: false, hasError: !loaded.success}))
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            })
+            .then(decoded => {
+                if (decoded.success) {
+                    return decoded.data;
+                }
+                return Promise.reject("Сервер ответил success=false");
+            })
+            .then(loaded => setState({data: loaded, isLoading: false, hasError: false}))
             .catch(_ => {
                 setState({...state, hasError: true, isLoading: false});
             });
@@ -34,9 +45,7 @@ const App = () => {
             <AppHeader/>
             {!isLoading &&
                 !hasError && (
-                    <div>
-                        <BurgerTwopanels ingredients={data} basket={basket}/>
-                    </div>
+                    <Main ingredients={data} basket={basket}/>
                 )}
         </div>
     );

@@ -1,4 +1,4 @@
-.twoContainer {
+.main {
     display: grid;
     grid-template-columns: 600px 600px;
     gap: 40px;

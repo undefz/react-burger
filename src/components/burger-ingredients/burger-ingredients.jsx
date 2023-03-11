@@ -16,36 +16,36 @@ export const BurgerIngredients = ({ingredients, basket}) => {
 
     const onTabClick = tab => {
         setCurrentTab(tab);
-        typesRefs[tab]?.current?.scrollIntoView();
+        typesRefs[tab]?.current?.scrollIntoView({behavior: "smooth"});
     }
 
     return (
-        <>
-            <section className={styles.sectionContainer}>
-                <h1 className={styles.sectionHeader}>Соберите бургер</h1>
-                <div className={styles.tabList}>
-                    {
-                        Object.entries(INGREDIENT_NAMES).map(([key, value]) =>
-                            <Tab key={key}
-                                 active={currentTab === key}
-                                 value={key}
-                                 onClick={onTabClick}>
-                                {value}
-                            </Tab>
-                        )
-                    }
-                </div>
-                <div className={styles.listContainer}>
-                    {
-                        Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
-                            const filtered = ingredients
-                                .filter(e => e.type === key);
-                            return (<IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]} basket={basket}/>);
-                        })
-                    }
-                </div>
-            </section>
-        </>
+        <section className={styles.sectionContainer}>
+            <h1 className={styles.sectionHeader}>Соберите бургер</h1>
+            <div className={styles.tabList}>
+                {
+                    Object.entries(INGREDIENT_NAMES).map(([key, value]) =>
+                        <Tab key={key}
+                             active={currentTab === key}
+                             value={key}
+                             onClick={onTabClick}>
+                            {value}
+                        </Tab>
+                    )
+                }
+            </div>
+            <div className={styles.listContainer}>
+                {
+                    Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
+                        const filtered = ingredients
+                            .filter(e => e.type === key);
+                        return (
+                            <IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}
+                                             basket={basket}/>);
+                    })
+                }
+            </div>
+        </section>
     );
 }
 
