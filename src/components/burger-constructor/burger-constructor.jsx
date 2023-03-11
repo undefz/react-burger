@@ -6,7 +6,7 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import {INGREDIENTS_ARRAY} from "../../utils/BurgerPropTypes";
 
-export const BurgerConstructor = ({ingredients}) => {
+export const BurgerConstructor = ({basket}) => {
     const [showModal, setShowModal] = useState(false);
 
     const onButtonClick = () => {
@@ -16,11 +16,11 @@ export const BurgerConstructor = ({ingredients}) => {
         setShowModal(false);
     }
 
-    const bun = ingredients.filter(e => e.type === "bun")[0];
+    const bun = basket.filter(e => e.type === "bun")[0];
 
-    let otherIngredients = ingredients.filter(e => e.type !== "bun")
+    let otherIngredients = basket.filter(e => e.type !== "bun")
 
-    let total = bun.price * 2 + otherIngredients.map(e => e.price).reduce((a, b) => a + b, 0);
+    let total = basket.map(e => e.price).reduce((a, b) => a + b, 0);
 
     return (
         <div className="mt-25">
@@ -51,7 +51,7 @@ export const BurgerConstructor = ({ingredients}) => {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: INGREDIENTS_ARRAY.isRequired
+    basket: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerConstructor;

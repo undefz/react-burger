@@ -5,7 +5,7 @@ import {IngredientsList} from "./ingredients-list/ingredients-list";
 import {INGREDIENT_NAMES} from "../../utils/AppConfig";
 import {INGREDIENTS_ARRAY} from "../../utils/BurgerPropTypes";
 
-export const BurgerIngredients = ({ingredients}) => {
+export const BurgerIngredients = ({ingredients, basket}) => {
     const [currentTab, setCurrentTab] = useState("bun");
 
     const typesRefs = {
@@ -40,7 +40,7 @@ export const BurgerIngredients = ({ingredients}) => {
                         Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
                             const filtered = ingredients
                                 .filter(e => e.type === key);
-                            return (<IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
+                            return (<IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]} basket={basket}/>);
                         })
                     }
                 </div>
@@ -50,7 +50,8 @@ export const BurgerIngredients = ({ingredients}) => {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: INGREDIENTS_ARRAY.isRequired
+    ingredients: INGREDIENTS_ARRAY.isRequired,
+    basket: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerIngredients;

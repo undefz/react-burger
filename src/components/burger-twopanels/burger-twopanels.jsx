@@ -4,19 +4,20 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {INGREDIENTS_ARRAY} from "../../utils/BurgerPropTypes";
 
-export const BurgerTwopanels = ({ingredients}) => {
+export const BurgerTwopanels = ({ingredients, basket}) => {
     return (
         <>
             <main className={styles.twoContainer}>
-                <BurgerIngredients ingredients={ingredients}/>
-                <BurgerConstructor ingredients={ingredients}/>
+                <BurgerIngredients ingredients={ingredients} basket={basket}/>
+                <BurgerConstructor basket={basket}/>
             </main>
         </>
     )
 }
 
 BurgerTwopanels.propTypes = {
-    ingredients: INGREDIENTS_ARRAY.isRequired
+    ingredients: INGREDIENTS_ARRAY.isRequired,
+    basket: INGREDIENTS_ARRAY.isRequired,
 }
 
 export default BurgerTwopanels;

@@ -3,6 +3,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerTwopanels from "../burger-twopanels/burger-twopanels";
 import styles from "./app.module.css";
 import {REMOTE_URL} from "../../utils/AppConfig"
+import {generateBasket} from "../../utils/Utils";
 
 const App = () => {
     const [state, setState] = React.useState({
@@ -26,13 +27,15 @@ const App = () => {
 
     // console.log(`Loading state ${JSON.stringify(data)} ${isLoading} ${hasError}`);
 
+    const basket = generateBasket(data);
+
     return (
         <div className={styles.app}>
             <AppHeader/>
             {!isLoading &&
                 !hasError && (
                     <div>
-                        <BurgerTwopanels ingredients={data}/>
+                        <BurgerTwopanels ingredients={data} basket={basket}/>
                     </div>
                 )}
         </div>
