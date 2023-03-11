@@ -1,5 +1,5 @@
 import styles from "./ingredient-details.module.css"
-import {INGREDIENT} from "../../utils/BurgerPropTypes";
+import {INGREDIENT} from "../../utils/burger-prop-types";
 
 const IngredientDetails = ({ingredient}) => {
     return (

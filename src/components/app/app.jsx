@@ -2,8 +2,8 @@ import React from 'react';
 import AppHeader from "../app-header/app-header";
 import BurgerTwopanels from "../burger-twopanels/burger-twopanels";
 import styles from "./app.module.css";
-import {REMOTE_URL} from "../../utils/AppConfig"
-import {generateBasket} from "../../utils/Utils";
+import {REMOTE_URL} from "../../utils/app-config"
+import {generateBasket} from "../../utils/utils";
 
 const App = () => {
     const [state, setState] = React.useState({

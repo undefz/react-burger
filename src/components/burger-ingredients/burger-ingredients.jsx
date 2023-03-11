@@ -2,8 +2,8 @@ import React, {useRef, useState} from "react";
 import styles from "./burger-ingredients.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientsList} from "./ingredients-list/ingredients-list";
-import {INGREDIENT_NAMES} from "../../utils/AppConfig";
-import {INGREDIENTS_ARRAY} from "../../utils/BurgerPropTypes";
+import {INGREDIENT_NAMES} from "../../utils/app-config";
+import {INGREDIENTS_ARRAY} from "../../utils/burger-prop-types";
 
 export const BurgerIngredients = ({ingredients, basket}) => {
     const [currentTab, setCurrentTab] = useState("bun");

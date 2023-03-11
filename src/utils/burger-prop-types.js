@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {INGREDIENT_TYPES} from "./AppConfig";
+import {INGREDIENT_TYPES} from "./app-config";
 
 export const INGREDIENT_TYPE = PropTypes.oneOf(INGREDIENT_TYPES);
 

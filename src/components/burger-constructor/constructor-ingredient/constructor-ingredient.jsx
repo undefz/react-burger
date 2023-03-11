@@ -2,7 +2,7 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import React from "react";
 import styles from "./constructor-ingredient.module.css"
 import PropTypes from "prop-types";
-import {INGREDIENT} from "../../../utils/BurgerPropTypes";
+import {INGREDIENT} from "../../../utils/burger-prop-types";
 
 
 const ConstructorIngredient = ({ingredient, type}) => {

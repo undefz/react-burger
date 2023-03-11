@@ -3,7 +3,7 @@ import styles from "./ingredients-item.module.css"
 import React from "react";
 import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
-import {INGREDIENT} from "../../../utils/BurgerPropTypes";
+import {INGREDIENT} from "../../../utils/burger-prop-types";
 import PropTypes from "prop-types";
 
 export const IngredientItem = ({item, count}) => {

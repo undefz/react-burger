@@ -1,5 +1,5 @@
 import styles from "./modal-overlay.module.css";
-import {CHILDREN} from "../../utils/BurgerPropTypes";
+import {CHILDREN} from "../../utils/burger-prop-types";
 import PropTypes from "prop-types";
 
 const ModalOverlay = ({closeModal, children}) => {
