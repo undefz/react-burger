@@ -6,7 +6,7 @@ export const IngredientsList = React.forwardRef(({header, ingredientsList}, ref)
         <h2 className={styles.ingredientsHeader}>{header}</h2>
         <div className={styles.ingredientsGrid}>
             {
-                ingredientsList.map(item => (<IngredientItem item={item} count={1}/>))
+                ingredientsList.map(item => (<IngredientItem key={item._id} item={item} count={1}/>))
             }
         </div>
     </div>);

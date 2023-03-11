@@ -26,7 +26,7 @@ export const BurgerConstructor = ({ingredients}) => {
             <section className={`${styles.mainConstructor}`}>
                 <ConstructorIngredient ingredient={bun} type="top"/>
                 {
-                    otherIngredients.map(e => (<ConstructorIngredient ingredient={e}/>))
+                    otherIngredients.map(e => (<ConstructorIngredient key={e._id} ingredient={e}/>))
                 }
                 <ConstructorIngredient ingredient={bun} type="bottom"/>
             </section>

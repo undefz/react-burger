@@ -44,7 +44,7 @@ export const BurgerIngredients = ({ingredients}) => {
                         Object.entries(INGREDIENT_TYPES).map(([key, value]) => {
                             var filtered = ingredients
                                 .filter(e => e.type === key);
-                            return (<IngredientsList header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
+                            return (<IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
                         })
                     }
                 </div>
