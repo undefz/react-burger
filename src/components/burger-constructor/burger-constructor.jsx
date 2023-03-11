@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./burger-constructor.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
+import OrderDetails from "../order-details/order-details";
+import Modal from "../modal/modal";
 
 export const BurgerConstructor = ({ingredients}) => {
-    const bun = ingredients.filter(e => e.type === "bun")[0];
+    const [showModal, setShowModal] = useState(false);
 
-    console.log("BUN " + bun);
+    const onButtonClick = () => {
+        setShowModal(true);
+    }
+    const onModalClose = () => {
+        setShowModal(false);
+    }
+
+    const bun = ingredients.filter(e => e.type === "bun")[0];
 
     let total = 500;
 
@@ -26,9 +35,17 @@ export const BurgerConstructor = ({ingredients}) => {
                     <p className="text text_type_digits-medium">{total}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="large" onClick={onButtonClick}>Оформить заказ</Button>
             </div>
+            {
+                showModal && (
+                    <Modal closeModal={onModalClose}>
+                        <OrderDetails/>
+                    </Modal>
+                )
+            }
         </div>
+
     )
 }
 
