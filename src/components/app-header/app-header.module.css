@@ -1,0 +1,35 @@
+.header {
+    background-color: #1c1c21;
+    height: 88px;
+    display: block;
+    width: 1260px;
+}
+
+.nav {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.navList {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.menuItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.twoBox {
+    display: flex;
+    gap: 8px;
+}

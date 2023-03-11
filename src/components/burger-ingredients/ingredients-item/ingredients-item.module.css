@@ -1,0 +1,27 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.itemName {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+    height: 48px;
+    text-align: center;
+}
+
+.counter {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

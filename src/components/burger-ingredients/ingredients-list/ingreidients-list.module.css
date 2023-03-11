@@ -1,0 +1,12 @@
+.ingredientsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    composes: mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: ml-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+
+.ingredientsHeader {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
