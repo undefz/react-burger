@@ -18,7 +18,7 @@ const App = () => {
             .catch(_ => {
                 setState({...state, hasError: true, isLoading: false});
             });
-    }, [state]);
+    }, []);
 
 
     const {data, isLoading, hasError} = state;
