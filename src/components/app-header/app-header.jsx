@@ -12,22 +12,22 @@ export const AppHeader = () => {
         <header className={styles.header}>
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
-                    <div className={styles.twoBox}>
+                    <div className={`${styles.twoBox} ${styles.first}`}>
                         <li className={styles.menuItem}>
                             <BurgerIcon type="primary"/>
                             <p className="text text_type_main-default ml-2">Конструктор</p>
                         </li>
                         <li className={styles.menuItem}>
-                            <ListIcon type="primary"/>
-                            <p className="text text_type_main-default ml-2">Лента заказов</p>
+                            <ListIcon type="secondary"/>
+                            <p className="text text_type_main-default text_color_inactive ml-2">Лента заказов</p>
                         </li>
                     </div>
                     <li className={styles.menuItem}>
-                        <Logo/>
+                        <Logo className={styles.logo}/>
                     </li>
-                    <li className={styles.menuItem}>
-                        <ProfileIcon type="primary"/>
-                        <p className="text text_type_main-default ml-2">Личный кабинет</p>
+                    <li className={`${styles.menuItem} ${styles.last} mr-`}>
+                        <ProfileIcon type="secondary"/>
+                        <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
                     </li>
                 </ul>
             </nav>
