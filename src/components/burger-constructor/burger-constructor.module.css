@@ -3,12 +3,18 @@
     flex-direction: column;
     width: 600px;
     justify-content: start;
-    align-items: flex-end;
+    align-items: flex-start;
+    gap: 16px;
+
+    max-height: calc(100vh - 56px - 40px - 100px);
+}
+
+.scrollable {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
 
     composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
-
-    max-height: calc(100vh - 56px - 40px - 100px);
     overflow-y: auto;
 }
 

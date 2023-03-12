@@ -14,24 +14,24 @@ const basketName = (name, type) => {
     }
     return name;
 }
-const ConstructorIngredient = ({ingredient, type}) => {
+const ConstructorIngredient = ({ingredient, type, extraClass}) => {
     const name = basketName(ingredient.name, type);
 
     const isLocked = type === "top" || type === "bottom";
 
     return (
-        <div className={styles.constructorIngredient}>
+        <div className={`${styles.constructorIngredient} ${extraClass}`}>
             {!isLocked && <DragIcon type="primary"/>}
             <ConstructorElement text={name} thumbnail={ingredient.image} price={ingredient.price} isLocked={isLocked} type={type}/>
         </div>
-
         );
 
 }
 
 ConstructorIngredient.propTypes = {
     ingredient: INGREDIENT.isRequired,
-    type: PropTypes.oneOf(["top", "bottom"])
+    type: PropTypes.oneOf(["top", "bottom"]),
+    extraClass: PropTypes.string
 }
 
 export default ConstructorIngredient;

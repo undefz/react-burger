@@ -23,11 +23,14 @@ export const BurgerConstructor = ({basket}) => {
     return (
         <div className="mt-25">
             <section className={`${styles.mainConstructor}`}>
-                <ConstructorIngredient ingredient={bun} type="top"/>
-                {
-                    otherIngredients.map(e => (<ConstructorIngredient key={e._id} ingredient={e}/>))
-                }
-                <ConstructorIngredient ingredient={bun} type="bottom"/>
+                <ConstructorIngredient ingredient={bun} type="top" extraClass="ml-8"/>
+                <div className={styles.scrollable}>
+                    {
+                        otherIngredients.map(e => (
+                            <ConstructorIngredient key={e._id} ingredient={e}/>))
+                    }
+                </div>
+                <ConstructorIngredient ingredient={bun} type="bottom" extraClass="ml-8"/>
             </section>
             <div className={`${styles.orderBlock} mt-10`}>
                 <div className={styles.price}>
