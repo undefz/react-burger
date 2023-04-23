@@ -1,6 +1,5 @@
 import {fetchError, fetchStarted, fetchSuccess} from "../reducers/burger-ingredients";
 import {REMOTE_URL} from "../../utils/app-config";
-import {fillBasket} from "../reducers/burger-constructor";
 
 export const fetchIngredients = () => {
     return (dispatch) => {

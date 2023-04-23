@@ -1,6 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
-import {generateBasket} from "../../utils/utils";
 
 export const constructorSlice = createSlice({
     name: 'basket',
@@ -17,9 +16,6 @@ export const constructorSlice = createSlice({
         },
         removeIngredient: (state, action) => {
             state.items = state.items.filter(item => item.uuid !== action.payload)
-        },
-        fillBasket: (state, action) => {
-            state.items = generateBasket(action.payload);
         },
         moveIngredient: (state, action) => {
             const {item, shift} = action.payload;
