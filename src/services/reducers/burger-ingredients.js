@@ -4,7 +4,7 @@ export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState: {
         items: [],
-        isLoading: true,
+        isLoading: false,
         hasError: false
     },
     reducers: {

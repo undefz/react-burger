@@ -6,7 +6,6 @@ export const orderDetailsSlice = createSlice({
         orderId: null,
         isLoading: false,
         isFailed: false,
-        open: false
     },
     reducers: {
         requestStarted: (state) => {
@@ -23,13 +22,10 @@ export const orderDetailsSlice = createSlice({
             state.isLoading = false;
             state.isFailed = false;
         },
-        open: (state) => {
-            state.open = true;
-        },
-        close: (state) => {
-            state.open = false;
+        closeModal: (state) => {
+            state.orderId = null;
         }
     }
 })
 
-export const {requestStarted, requestFailed, requestSuccess, open, close} = orderDetailsSlice.actions;
+export const {requestStarted, requestFailed, requestSuccess, closeModal} = orderDetailsSlice.actions;

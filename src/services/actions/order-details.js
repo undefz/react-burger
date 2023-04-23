@@ -1,12 +1,17 @@
-import {requestStarted} from "../reducers/order-details";
 import {ORDER_URL} from "../../utils/app-config";
-import {fetchError, fetchSuccess} from "../reducers/burger-ingredients";
+import {requestStarted, requestFailed, requestSuccess} from "../reducers/order-details";
 
-export const makeOrder = () => {
+export const makeOrder = (orderIds) => {
     return (dispatch) => {
         dispatch(requestStarted());
 
-        fetch(ORDER_URL)
+        const request = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ingredients: orderIds}),
+        };
+
+        fetch(ORDER_URL, request)
             .then(res => {
                 if (res.ok) {
                     return res.json();
@@ -15,13 +20,13 @@ export const makeOrder = () => {
             })
             .then(decoded => {
                 if (decoded.success) {
-                    return decoded.data;
+                    return decoded.order.number;
                 }
                 return Promise.reject("Сервер ответил success=false");
             })
-            .then(loaded => dispatch(fetchSuccess(loaded)))
+            .then(loaded => dispatch(requestSuccess(loaded)))
             .catch(_ => {
-                dispatch(fetchError());
+                dispatch(requestFailed());
             });
     }
 }

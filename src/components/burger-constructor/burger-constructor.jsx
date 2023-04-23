@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {ITEM_TYPES} from "../../utils/app-config";
 import {addIngredient, moveIngredient, removeIngredient, selectBun} from "../../services/reducers/burger-constructor";
+import {makeOrder} from "../../services/actions/order-details";
+import {closeModal} from "../../services/reducers/order-details";
 
 export const BurgerConstructor = () => {
     const dispatch = useDispatch();
@@ -15,13 +17,19 @@ export const BurgerConstructor = () => {
     const basket = useSelector(state => state.basket.items);
     const bun = useSelector(state => state.basket.bun);
 
-    const [showModal, setShowModal] = useState(false);
+    const orderDetails = useSelector(state => state.orderDetails);
 
     const onButtonClick = () => {
-        setShowModal(true);
+        const orderIds = basket.map(x => x._id);
+        if (bun) {
+            orderIds.push(bun._id);
+            orderIds.push(bun._id);
+        }
+
+        dispatch(makeOrder(orderIds))
     }
     const onModalClose = () => {
-        setShowModal(false);
+        dispatch(closeModal())
     }
 
     const total = basket.map(e => e.price).reduce((a, b) => a + b, 0) + (bun ? bun.price * 2 : 0);
@@ -98,7 +106,7 @@ export const BurgerConstructor = () => {
                 <Button htmlType="button" type="primary" size="large" onClick={onButtonClick}>Оформить заказ</Button>
             </div>
             {
-                showModal && (
+                orderDetails.orderId && (
                     <Modal closeModal={onModalClose}>
                         <OrderDetails/>
                     </Modal>
