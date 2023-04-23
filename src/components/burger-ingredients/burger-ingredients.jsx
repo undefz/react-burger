@@ -22,6 +22,18 @@ export const BurgerIngredients = () => {
         typesRefs[tab]?.current?.scrollIntoView({behavior: "smooth"});
     }
 
+    const handleScroll = (e) => {
+        const scrollTop = e.target.scrollTop;
+
+        Object.entries(typesRefs).forEach(([key, value]) => {
+            const tabTop = value.current.getBoundingClientRect().top;
+
+            if (scrollTop > tabTop) {
+                setCurrentTab(key);
+            }
+        })
+    }
+
     return (
         <section className={styles.sectionContainer}>
             <h1 className={styles.sectionHeader}>Соберите бургер</h1>
@@ -37,7 +49,7 @@ export const BurgerIngredients = () => {
                     )
                 }
             </div>
-            <div className={styles.listContainer}>
+            <div className={styles.listContainer} onScroll={handleScroll}>
                 {
                     Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
                         const filtered = ingredients.filter(e => e.type === key);
