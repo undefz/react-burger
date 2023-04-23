@@ -4,9 +4,11 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import {INGREDIENTS_ARRAY} from "../../utils/burger-prop-types";
+import {useSelector} from "react-redux";
 
-export const BurgerConstructor = ({basket}) => {
+export const BurgerConstructor = () => {
+    const basket = useSelector(state => state.basket.items);
+
     const [showModal, setShowModal] = useState(false);
 
     const onButtonClick = () => {
@@ -52,7 +54,6 @@ export const BurgerConstructor = ({basket}) => {
 }
 
 BurgerConstructor.propTypes = {
-    basket: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerConstructor;

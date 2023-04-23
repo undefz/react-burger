@@ -31,7 +31,7 @@ export const IngredientItem = ({item, count}) => {
 
             {showModal && (
                 <Modal closeModal={onModalClose}>
-                    <IngredientDetails ingredient={item}/>
+                    <IngredientDetails/>
                 </Modal>
             )}
         </div>

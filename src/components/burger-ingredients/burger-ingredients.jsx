@@ -3,9 +3,12 @@ import styles from "./burger-ingredients.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientsList} from "./ingredients-list/ingredients-list";
 import {INGREDIENT_NAMES} from "../../utils/app-config";
-import {INGREDIENTS_ARRAY} from "../../utils/burger-prop-types";
+import {useSelector} from "react-redux";
 
-export const BurgerIngredients = ({ingredients, basket}) => {
+export const BurgerIngredients = () => {
+    const ingredients = useSelector(state => state.ingredients.items);
+    const basket = useSelector(state => state.basket.items);
+
     const [currentTab, setCurrentTab] = useState("bun");
 
     const typesRefs = {
@@ -50,8 +53,6 @@ export const BurgerIngredients = ({ingredients, basket}) => {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: INGREDIENTS_ARRAY.isRequired,
-    basket: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerIngredients;
