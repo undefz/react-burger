@@ -22,6 +22,11 @@ export const constructorSlice = createSlice({
             state.items = generateBasket(action.payload);
         },
         moveIngredient: (state, action) => {
+            const {item, shift} = action.payload;
+            const index = state.items.findIndex(x => x.uuid === item.uuid);
+
+            const taken = state.items.splice(index, 1)[0];
+            state.items.splice(index + shift, 0, taken);
         }
     }
 })
