@@ -1,19 +1,19 @@
-import React, {useRef, useState} from "react";
+import React, {useMemo, useRef, useState} from "react";
 import styles from "./burger-ingredients.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientsList} from "./ingredients-list/ingredients-list";
-import {INGREDIENT_NAMES} from "../../utils/app-config";
+import {INGREDIENT_NAMES, INGREDIENT_TYPES, TYPE_BUN, TYPE_MAIN, TYPE_SAUCE} from "../../utils/app-config";
 import {useSelector} from "react-redux";
 
 export const BurgerIngredients = () => {
     const ingredients = useSelector(state => state.ingredients.items);
 
-    const [currentTab, setCurrentTab] = useState("bun");
+    const [currentTab, setCurrentTab] = useState(TYPE_BUN);
 
     const typesRefs = {
-        "bun": useRef(),
-        "sauce": useRef(),
-        "main": useRef()
+        [TYPE_BUN]: useRef(),
+        [TYPE_SAUCE]: useRef(),
+        [TYPE_MAIN]: useRef()
     }
 
     const onTabClick = tab => {
@@ -59,9 +59,6 @@ export const BurgerIngredients = () => {
             </div>
         </section>
     );
-}
-
-BurgerIngredients.propTypes = {
 }
 
 export default BurgerIngredients;

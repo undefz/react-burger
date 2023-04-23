@@ -5,19 +5,10 @@ import PropTypes from "prop-types";
 import {INGREDIENT} from "../../../utils/burger-prop-types";
 import {useDrag} from "react-dnd";
 import {ITEM_TYPES} from "../../../utils/app-config";
+import {getBasketName} from "../../../utils/utils";
 
-
-const basketName = (name, type) => {
-    if (type === "top") {
-        return name + " (верх)";
-    }
-    if (type === "bottom") {
-        return name + " (низ)";
-    }
-    return name;
-}
 const ConstructorIngredient = ({ingredient, type, extraClass, handleClose}) => {
-    const name = basketName(ingredient.name, type);
+    const name = getBasketName(ingredient.name, type);
 
     const isLocked = type === "top" || type === "bottom";
 

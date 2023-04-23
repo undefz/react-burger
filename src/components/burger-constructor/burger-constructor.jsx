@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useMemo, useRef } from "react";
 import styles from "./burger-constructor.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
@@ -6,7 +6,7 @@ import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
-import {ITEM_TYPES} from "../../utils/app-config";
+import {ITEM_TYPES, TYPE_BUN} from "../../utils/app-config";
 import {addIngredient, moveIngredient, removeIngredient, selectBun} from "../../services/reducers/burger-constructor";
 import {makeOrder} from "../../services/actions/order-details";
 import {closeModal} from "../../services/reducers/order-details";
@@ -32,7 +32,9 @@ export const BurgerConstructor = () => {
         dispatch(closeModal())
     }
 
-    const total = basket.map(e => e.price).reduce((a, b) => a + b, 0) + (bun ? bun.price * 2 : 0);
+    const total = useMemo(() => {
+        return basket.map(e => e.price).reduce((a, b) => a + b, 0) + (bun ? bun.price * 2 : 0);
+    }, [basket, bun]);
 
     const [, dropTargetRef] = useDrop({
         accept: [ITEM_TYPES.INGREDIENT_CARD, ITEM_TYPES.CONSTRUCTOR_CARD],
@@ -49,7 +51,7 @@ export const BurgerConstructor = () => {
         const { type } = item;
 
         switch (type) {
-            case "bun": {
+            case TYPE_BUN: {
                 dispatch(selectBun(item));
                 break;
             }
@@ -115,9 +117,6 @@ export const BurgerConstructor = () => {
         </div>
 
     )
-}
-
-BurgerConstructor.propTypes = {
 }
 
 export default BurgerConstructor;

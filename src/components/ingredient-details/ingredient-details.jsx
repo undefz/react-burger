@@ -28,7 +28,4 @@ const IngredientField = ({name, value}) => {
     );
 }
 
-IngredientDetails.propTypes = {
-}
-
 export default IngredientDetails;
