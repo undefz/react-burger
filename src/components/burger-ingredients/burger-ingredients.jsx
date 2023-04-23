@@ -7,7 +7,6 @@ import {useSelector} from "react-redux";
 
 export const BurgerIngredients = () => {
     const ingredients = useSelector(state => state.ingredients.items);
-    const basket = useSelector(state => state.basket);
 
     const [currentTab, setCurrentTab] = useState("bun");
 
@@ -54,8 +53,7 @@ export const BurgerIngredients = () => {
                     Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
                         const filtered = ingredients.filter(e => e.type === key);
                         return (
-                            <IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}
-                                             basket={basket}/>);
+                            <IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
                     })
                 }
             </div>

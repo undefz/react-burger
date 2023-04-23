@@ -12,9 +12,7 @@ const App = () => {
         dispatch(fetchIngredients())
     }, [dispatch]);
 
-    const {items, isLoading, hasError} = useSelector(state => state.ingredients);
-
-    console.log(`Loading state ${JSON.stringify(items)} ${isLoading} ${hasError}`);
+    const {isLoading, hasError} = useSelector(state => state.ingredients);
 
     return (
         <div className={styles.app}>

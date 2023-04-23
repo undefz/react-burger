@@ -4,7 +4,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {INGREDIENTS_ARRAY} from "../../../utils/burger-prop-types";
 import {calculateCount} from "../../../utils/utils";
-export const IngredientsList = React.forwardRef(({header, ingredientsList, basket}, ref) => {
+import {useSelector} from "react-redux";
+export const IngredientsList = React.forwardRef(({header, ingredientsList}, ref) => {
+    const basket = useSelector(state => state.basket);
+
     return (<div ref={ref}>
         <h2 className={styles.ingredientsHeader}>{header}</h2>
         <div className={styles.ingredientsGrid}>
@@ -17,6 +20,5 @@ export const IngredientsList = React.forwardRef(({header, ingredientsList, baske
 
 IngredientsList.propTypes = {
     header: PropTypes.string.isRequired,
-    ingredientsList: INGREDIENTS_ARRAY,
-    basket: INGREDIENTS_ARRAY
+    ingredientsList: INGREDIENTS_ARRAY
 }

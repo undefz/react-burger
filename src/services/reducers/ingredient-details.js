@@ -3,8 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 export const ingredientDetailsSlice = createSlice({
     name: 'ingredientDetails',
     initialState: {
-        selected: null,
-        open: false
+        selected: null
     },
     reducers: {
         select: (state, action) => {
@@ -12,14 +11,8 @@ export const ingredientDetailsSlice = createSlice({
         },
         deselect: (state) => {
             state.selected = null;
-        },
-        open: (state) => {
-            state.open = true;
-        },
-        close: (state) => {
-            state.open = false;
         }
     }
 })
 
-export const {select, deselect, open, close} = ingredientDetailsSlice.actions;
+export const {select, deselect} = ingredientDetailsSlice.actions;

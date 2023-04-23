@@ -1,7 +1,9 @@
 import styles from "./ingredient-details.module.css"
-import {INGREDIENT} from "../../utils/burger-prop-types";
+import {useSelector} from "react-redux";
 
-const IngredientDetails = ({ingredient}) => {
+const IngredientDetails = () => {
+    const ingredient = useSelector(state => state.ingredientDetails.selected);
+
     return (
         <div className={`${styles.detailsMain}`}>
             <h1 className={styles.detailsHeader}>Детали ингредиента</h1>
@@ -27,7 +29,6 @@ const IngredientField = ({name, value}) => {
 }
 
 IngredientDetails.propTypes = {
-    ingredient: INGREDIENT.isRequired
 }
 
 export default IngredientDetails;
