@@ -14,7 +14,7 @@ const basketName = (name, type) => {
     }
     return name;
 }
-const ConstructorIngredient = ({ingredient, type, extraClass}) => {
+const ConstructorIngredient = ({ingredient, type, extraClass, handleClose}) => {
     const name = basketName(ingredient.name, type);
 
     const isLocked = type === "top" || type === "bottom";
@@ -22,7 +22,8 @@ const ConstructorIngredient = ({ingredient, type, extraClass}) => {
     return (
         <div className={`${styles.constructorIngredient} ${extraClass}`}>
             {!isLocked && <DragIcon type="primary"/>}
-            <ConstructorElement text={name} thumbnail={ingredient.image} price={ingredient.price} isLocked={isLocked} type={type}/>
+            <ConstructorElement text={name} thumbnail={ingredient.image} price={ingredient.price} isLocked={isLocked}
+                                type={type} handleClose={handleClose}/>
         </div>
         );
 

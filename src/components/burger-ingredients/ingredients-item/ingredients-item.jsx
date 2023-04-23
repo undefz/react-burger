@@ -5,9 +5,16 @@ import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import {INGREDIENT} from "../../../utils/burger-prop-types";
 import PropTypes from "prop-types";
+import {useDrag} from "react-dnd";
+import {ITEM_TYPES} from "../../../utils/app-config";
 
 export const IngredientItem = ({item, count}) => {
     const [showModal, setShowModal] = React.useState(false);
+
+    const [, dragRef] = useDrag({
+        type: ITEM_TYPES.INGREDIENT_CARD,
+        item: item,
+    });
 
     const onItemClick = () => {
         setShowModal(true);
@@ -17,7 +24,7 @@ export const IngredientItem = ({item, count}) => {
     }
 
     return (
-        <div className={styles.item} onClick={onItemClick}>
+        <div className={styles.item} onClick={onItemClick} ref={dragRef}>
             {
                 count > 0 ? <Counter extraClass= {styles.counter} count={count}/> : null
             }

@@ -21,7 +21,6 @@ export const fetchIngredients = () => {
             })
             .then(loaded => {
                 dispatch(fetchSuccess(loaded));
-                dispatch(fillBasket(loaded));
             })
             .catch(_ => {
                 dispatch(fetchError());

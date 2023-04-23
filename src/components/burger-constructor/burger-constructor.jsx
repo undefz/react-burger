@@ -4,10 +4,16 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useDrop} from "react-dnd";
+import {ITEM_TYPES} from "../../utils/app-config";
+import {addIngredient, removeIngredient, selectBun} from "../../services/reducers/burger-constructor";
 
 export const BurgerConstructor = () => {
+    const dispatch = useDispatch();
+
     const basket = useSelector(state => state.basket.items);
+    const bun = useSelector(state => state.basket.bun);
 
     const [showModal, setShowModal] = useState(false);
 
@@ -18,21 +24,45 @@ export const BurgerConstructor = () => {
         setShowModal(false);
     }
 
-    const bun = basket.filter(e => e.type === "bun")[0];
-    const otherIngredients = basket.filter(e => e.type !== "bun")
-    const total = basket.map(e => e.price).reduce((a, b) => a + b, 0);
+    const total = basket.map(e => e.price).reduce((a, b) => a + b, 0) + (bun ? bun.price * 2 : 0);
+
+    const [, dropTargetRef] = useDrop({
+        accept: ITEM_TYPES.INGREDIENT_CARD,
+        drop(item) {
+            handleDrop(item);
+        },
+    });
+
+    const handleDrop = (item) => {
+        const { _id, type } = item;
+
+        switch (type) {
+            case "bun": {
+                dispatch(selectBun(item));
+                break;
+            }
+            default: {
+                dispatch(addIngredient(item));
+                break;
+            }
+        }
+    }
+
+    const handleClose = (uuid) => {
+        dispatch(removeIngredient(uuid))
+    }
 
     return (
-        <div className="mt-25">
+        <div className="mt-25" ref={dropTargetRef}>
             <section className={`${styles.mainConstructor}`}>
-                <ConstructorIngredient ingredient={bun} type="top" extraClass="ml-8"/>
+                { bun && <ConstructorIngredient ingredient={bun} type="top" extraClass="ml-8"/> }
                 <div className={styles.scrollable}>
                     {
-                        otherIngredients.map(e => (
-                            <ConstructorIngredient key={e._id} ingredient={e}/>))
+                        basket.map(e => (
+                            <ConstructorIngredient key={e.uuid} ingredient={e} handleClose={() => handleClose(e.uuid)}/>))
                     }
                 </div>
-                <ConstructorIngredient ingredient={bun} type="bottom" extraClass="ml-8"/>
+                { bun && <ConstructorIngredient ingredient={bun} type="bottom" extraClass="ml-8"/> }
             </section>
             <div className={`${styles.orderBlock} mt-10`}>
                 <div className={styles.price}>

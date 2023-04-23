@@ -13,5 +13,10 @@ export const generateBasket = (ingredients) => {
 }
 
 export const calculateCount = (basket, item) => {
-    return basket.filter(e => e._id === item._id).length;
+    if (item.type === "bun") {
+        if (item === basket.bun) {
+            return 2;
+        }
+    }
+    return basket.items.filter(e => e._id === item._id).length;
 }
