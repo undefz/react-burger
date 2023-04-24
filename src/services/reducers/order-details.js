@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {makeOrder} from "../actions/order-details";
 
 export const orderDetailsSlice = createSlice({
     name: 'orderDetails',
@@ -8,24 +9,24 @@ export const orderDetailsSlice = createSlice({
         isFailed: false,
     },
     reducers: {
-        requestStarted: (state) => {
-            state.isLoading = true;
-            state.isFailed = false;
-        },
-        requestFailed: (state) => {
-            state.orderId = '';
-            state.isLoading = false;
-            state.isFailed = true;
-        },
-        requestSuccess: (state, action) => {
-            state.orderId = action.payload;
-            state.isLoading = false;
-            state.isFailed = false;
-        },
         closeModal: (state) => {
             state.orderId = null;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(makeOrder.fulfilled, (state, action) => {
+            state.orderId = action.payload;
+            state.isLoading = false;
+            state.isFailed = false;
+        }).addCase(makeOrder.pending, state => {
+            state.isLoading = true;
+            state.isFailed = false;
+        }).addCase(makeOrder.rejected, state => {
+            state.orderId = '';
+            state.isLoading = false;
+            state.isFailed = true;
+        })
     }
 })
 
-export const {requestStarted, requestFailed, requestSuccess, closeModal} = orderDetailsSlice.actions;
+export const {closeModal} = orderDetailsSlice.actions;

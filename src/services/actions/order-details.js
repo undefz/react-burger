@@ -1,17 +1,16 @@
 import {ORDER_URL} from "../../utils/app-config";
-import {requestStarted, requestFailed, requestSuccess} from "../reducers/order-details";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const makeOrder = (orderIds) => {
-    return (dispatch) => {
-        dispatch(requestStarted());
-
+export const makeOrder = createAsyncThunk(
+    'order/makeOrder',
+    async (orderIds) => {
         const request = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ingredients: orderIds}),
         };
 
-        fetch(ORDER_URL, request)
+        return fetch(ORDER_URL, request)
             .then(res => {
                 if (res.ok) {
                     return res.json();
@@ -24,9 +23,4 @@ export const makeOrder = (orderIds) => {
                 }
                 return Promise.reject("Сервер ответил success=false");
             })
-            .then(loaded => dispatch(requestSuccess(loaded)))
-            .catch(_ => {
-                dispatch(requestFailed());
-            });
-    }
-}
+    })

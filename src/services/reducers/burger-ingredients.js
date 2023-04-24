@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {fetchIngredients} from "../actions/burger-ingredients";
 
 export const ingredientsSlice = createSlice({
     name: 'ingredients',
@@ -7,22 +8,18 @@ export const ingredientsSlice = createSlice({
         isLoading: false,
         hasError: false
     },
-    reducers: {
-        fetchStarted: (state) => {
+    extraReducers: (builder) => {
+        builder.addCase(fetchIngredients.pending, (state) => {
             state.isLoading = true;
             state.hasError = false;
-        },
-        fetchSuccess: (state, action) => {
-            state.isLoading = false;
-            state.hasError = false;
-            state.items = action.payload;
-        },
-        fetchError: (state) => {
-            state.items = [];
+        }).addCase(fetchIngredients.rejected, (state) => {
             state.isLoading = false;
             state.hasError = true;
-        }
+            state.items = [];
+        }).addCase(fetchIngredients.fulfilled, (state, action) => {
+            state.items = action.payload;
+            state.isLoading = false;
+            state.hasError = false;
+        })
     }
 })
-
-export const {fetchStarted, fetchSuccess, fetchError} = ingredientsSlice.actions;

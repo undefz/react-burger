@@ -1,11 +1,10 @@
-import {fetchError, fetchStarted, fetchSuccess} from "../reducers/burger-ingredients";
 import {REMOTE_URL} from "../../utils/app-config";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const fetchIngredients = () => {
-    return (dispatch) => {
-        dispatch(fetchStarted());
-
-        fetch(REMOTE_URL)
+export const fetchIngredients = createAsyncThunk(
+    'ingredients/fetchIngredients',
+    async () => {
+        return fetch(REMOTE_URL)
             .then(res => {
                 if (res.ok) {
                     return res.json();
@@ -18,11 +17,5 @@ export const fetchIngredients = () => {
                 }
                 return Promise.reject("Сервер ответил success=false");
             })
-            .then(loaded => {
-                dispatch(fetchSuccess(loaded));
-            })
-            .catch(_ => {
-                dispatch(fetchError());
-            });
     }
-}
+)
