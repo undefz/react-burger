@@ -33,6 +33,14 @@ export const BurgerIngredients = () => {
         })
     }
 
+    const ingredientsByType = useMemo(() => {
+        const result = {}
+        INGREDIENT_TYPES.forEach(key => {
+            result[key] = ingredients.filter(e => e.type === key);
+        })
+        return result;
+    }, [ingredients]);
+
     return (
         <section className={styles.sectionContainer}>
             <h1 className={styles.sectionHeader}>Соберите бургер</h1>
@@ -51,7 +59,7 @@ export const BurgerIngredients = () => {
             <div className={styles.listContainer} onScroll={handleScroll}>
                 {
                     Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
-                        const filtered = ingredients.filter(e => e.type === key);
+                        const filtered = ingredientsByType[key];
                         return (
                             <IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
                     })
