@@ -5,19 +5,29 @@ import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import {INGREDIENT} from "../../../utils/burger-prop-types";
 import PropTypes from "prop-types";
+import {useDrag} from "react-dnd";
+import {ITEM_TYPES} from "../../../utils/app-config";
+import {useDispatch, useSelector} from "react-redux";
+import {deselect, select} from "../../../services/reducers/ingredient-details";
 
 export const IngredientItem = ({item, count}) => {
-    const [showModal, setShowModal] = React.useState(false);
+    const dispatch = useDispatch();
+    const selectedItem = useSelector(state => state.ingredientDetails.selected);
+
+    const [, dragRef] = useDrag({
+        type: ITEM_TYPES.INGREDIENT_CARD,
+        item: item,
+    });
 
     const onItemClick = () => {
-        setShowModal(true);
+        dispatch(select(item))
     }
     const onModalClose = () => {
-        setShowModal(false);
+        dispatch(deselect());
     }
 
     return (
-        <div className={styles.item} onClick={onItemClick}>
+        <div className={styles.item} onClick={onItemClick} ref={dragRef}>
             {
                 count > 0 ? <Counter extraClass= {styles.counter} count={count}/> : null
             }
@@ -29,9 +39,9 @@ export const IngredientItem = ({item, count}) => {
             </div>
             <p className={styles.itemName}>{item.name}</p>
 
-            {showModal && (
+            {selectedItem && (
                 <Modal closeModal={onModalClose}>
-                    <IngredientDetails ingredient={item}/>
+                    <IngredientDetails/>
                 </Modal>
             )}
         </div>

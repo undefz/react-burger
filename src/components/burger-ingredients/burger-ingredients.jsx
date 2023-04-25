@@ -1,23 +1,45 @@
-import React, {useRef, useState} from "react";
+import React, {useMemo, useRef, useState} from "react";
 import styles from "./burger-ingredients.module.css"
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {IngredientsList} from "./ingredients-list/ingredients-list";
-import {INGREDIENT_NAMES} from "../../utils/app-config";
-import {INGREDIENTS_ARRAY} from "../../utils/burger-prop-types";
+import {INGREDIENT_NAMES, INGREDIENT_TYPES, TYPE_BUN, TYPE_MAIN, TYPE_SAUCE} from "../../utils/app-config";
+import {useSelector} from "react-redux";
 
-export const BurgerIngredients = ({ingredients, basket}) => {
-    const [currentTab, setCurrentTab] = useState("bun");
+export const BurgerIngredients = () => {
+    const ingredients = useSelector(state => state.ingredients.items);
+
+    const [currentTab, setCurrentTab] = useState(TYPE_BUN);
 
     const typesRefs = {
-        "bun": useRef(),
-        "sauce": useRef(),
-        "main": useRef()
+        [TYPE_BUN]: useRef(),
+        [TYPE_SAUCE]: useRef(),
+        [TYPE_MAIN]: useRef()
     }
 
     const onTabClick = tab => {
         setCurrentTab(tab);
         typesRefs[tab]?.current?.scrollIntoView({behavior: "smooth"});
     }
+
+    const handleScroll = (e) => {
+        const scrollTop = e.target.scrollTop;
+
+        Object.entries(typesRefs).forEach(([key, value]) => {
+            const tabTop = value.current.getBoundingClientRect().top;
+
+            if (scrollTop > tabTop) {
+                setCurrentTab(key);
+            }
+        })
+    }
+
+    const ingredientsByType = useMemo(() => {
+        const result = {}
+        INGREDIENT_TYPES.forEach(key => {
+            result[key] = ingredients.filter(e => e.type === key);
+        })
+        return result;
+    }, [ingredients]);
 
     return (
         <section className={styles.sectionContainer}>
@@ -34,24 +56,17 @@ export const BurgerIngredients = ({ingredients, basket}) => {
                     )
                 }
             </div>
-            <div className={styles.listContainer}>
+            <div className={styles.listContainer} onScroll={handleScroll}>
                 {
                     Object.entries(INGREDIENT_NAMES).map(([key, value]) => {
-                        const filtered = ingredients
-                            .filter(e => e.type === key);
+                        const filtered = ingredientsByType[key];
                         return (
-                            <IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}
-                                             basket={basket}/>);
+                            <IngredientsList key={key} header={value} ingredientsList={filtered} ref={typesRefs[key]}/>);
                     })
                 }
             </div>
         </section>
     );
-}
-
-BurgerIngredients.propTypes = {
-    ingredients: INGREDIENTS_ARRAY.isRequired,
-    basket: INGREDIENTS_ARRAY.isRequired
 }
 
 export default BurgerIngredients;

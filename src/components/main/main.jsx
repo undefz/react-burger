@@ -2,20 +2,18 @@ import React from "react";
 import styles from "./main.module.css"
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {INGREDIENTS_ARRAY} from "../../utils/burger-prop-types";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
-export const Main = ({ingredients, basket}) => {
+export const Main = () => {
     return (
         <main className={styles.main}>
-            <BurgerIngredients ingredients={ingredients} basket={basket}/>
-            <BurgerConstructor basket={basket}/>
+            <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients/>
+                <BurgerConstructor/>
+            </DndProvider>
         </main>
     )
-}
-
-Main.propTypes = {
-    ingredients: INGREDIENTS_ARRAY.isRequired,
-    basket: INGREDIENTS_ARRAY.isRequired,
 }
 
 export default Main;

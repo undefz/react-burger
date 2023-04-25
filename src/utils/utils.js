@@ -1,17 +1,19 @@
+import {TYPE_BUN} from "./app-config";
 
-export const generateBasket = (ingredients) => {
-    const bun = ingredients.filter(e => e.type === "bun")[0];
-
-    const other = ingredients.filter(e => {
-        if (e.type === "bun") {
-            return false;
-        }
-        return Math.random() > 0.5;
-    });
-
-    return [bun, ...other, bun];
+export const getBasketName = (name, type) => {
+    if (type === "top") {
+        return name + " (верх)";
+    }
+    if (type === "bottom") {
+        return name + " (низ)";
+    }
+    return name;
 }
-
 export const calculateCount = (basket, item) => {
-    return basket.filter(e => e._id === item._id).length;
+    if (item.type === TYPE_BUN) {
+        if (item === basket.bun) {
+            return 2;
+        }
+    }
+    return basket.items.filter(e => e._id === item._id).length;
 }
