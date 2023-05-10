@@ -6,6 +6,7 @@ import {
     Logo,
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {NavLink} from "react-router-dom";
 
 export const AppHeader = () => {
     return (
@@ -15,7 +16,11 @@ export const AppHeader = () => {
                     <div className={`${styles.twoBox} ${styles.first}`}>
                         <li className={styles.menuItem}>
                             <BurgerIcon type="primary"/>
-                            <p className="text text_type_main-default ml-2">Конструктор</p>
+                            <NavLink to="/">
+                                {({isActive, isPending}) => (
+                                    <p className="text text_type_main-default ml-2">Конструктор</p>
+                                )}
+                            </NavLink>
                         </li>
                         <li className={styles.menuItem}>
                             <ListIcon type="secondary"/>
