@@ -20,6 +20,16 @@ export const queryLogout = (refreshToken) => {
     return queryEndpoint('/auth/logout', {token: refreshToken})
 }
 
+export const queryIngredients = () => {
+    return queryEndpoint('/ingredients', null, false, 'GET')
+        .then(res => res.data);
+}
+
+export const queryOrder = (orderIds) => {
+    return queryEndpoint('/orders', {ingredients: orderIds}, false, 'POST')
+        .then(res => res.order.number);
+}
+
 export const queryEndpoint = async (url, body, auth = false, methodType = 'POST', attempt = 0) => {
     const headers = {'Content-Type': 'application/json'}
     if (auth) {
