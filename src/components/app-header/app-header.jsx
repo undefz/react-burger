@@ -6,19 +6,21 @@ import {
     Logo,
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import {useLocation} from "react-router";
 
 export const MenuItem = ({link, icon, text}) => {
+    const location = useLocation();
+    const isActive = location.pathname.startsWith(link);
+
     return (
-        <NavLink to={link} className={styles.link}>
-        {({isActive}) => (
+        <Link to={link} className={styles.link}>
             <div className={styles.menuItem}>
                 {icon(isActive)}
                 <p className={'text text_type_main-default ml-2 ' + (isActive ? 'text_color_primary' : '')}>{text}</p>
             </div>
-        )}
-    </NavLink>
+        </Link>
     );
 }
 
