@@ -39,14 +39,11 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
         request.body = JSON.stringify(body);
     }
 
-    console.log(`Request ${JSON.stringify(request)}`)
+    console.log(`Request ${JSON.stringify(request)} attempt=${attempt}`)
 
     return fetch(BASE_URL + url, request)
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            if (res.status === 403) {
+            if (res.status === 403 && attempt === 0) {
                 console.log("Starting refreshing token");
                 const refreshToken = localStorage.getItem('refreshToken');
                 const request = {
@@ -54,24 +51,33 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({token: refreshToken}),
                 }
-                fetch(BASE_URL + "/auth/token", request)
+                return fetch(BASE_URL + "/auth/token", request)
                     .then(res => {
                         if (res.ok) {
-                            console.log(`Successful token refresh ${res}`);
-                            const tokenBody = res.json()
-                            saveTokens(tokenBody);
+                            return res.json()
+                                .then(tokenBody => {
+                                    console.log(`Successful token refresh ${JSON.stringify(tokenBody)}`);
+                                    saveTokens(tokenBody);
+                                })
                         }
                     })
+                    .then(() => queryEndpoint(url, body, auth, methodType, 1));
             }
+
+            if (res.ok) {
+                return res.json()
+                    .then(decoded => {
+                        if (decoded.success) {
+                            return decoded;
+                        } else {
+                            return Promise.reject("Сервер ответил success=false");
+                        }
+                    });
+            }
+
             return Promise.reject(`Ошибка ${res.status}`);
         })
-        .then(decoded => {
-            if (decoded.success) {
-                return decoded;
-            } else {
-                return Promise.reject("Сервер ответил success=false");
-            }
-        })
+
 }
 
 export const saveTokens = (response) => {
