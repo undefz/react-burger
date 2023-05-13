@@ -48,9 +48,9 @@ export const AppHeader = () => {
 }
 
 MenuItem.propTypes = {
-    link: PropTypes.string,
-    icon: PropTypes.element,
-    text: PropTypes.string
+    link: PropTypes.string.isRequired,
+    icon: PropTypes.func.isRequired,
+    text: PropTypes.string.isRequired
 }
 
 export default AppHeader;
