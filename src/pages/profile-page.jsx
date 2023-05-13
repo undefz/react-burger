@@ -2,6 +2,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import profileStyles from './profile-page-styles.module.css'
 import {useDispatch} from "react-redux";
 import {logout} from "../services/actions/user";
+import PropTypes from "prop-types";
 export const ProfilePage = ({children}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,4 +26,8 @@ export const ProfilePage = ({children}) => {
             {children}
         </div>
     )
+}
+
+ProfilePage.propTypes = {
+    children: PropTypes.element
 }

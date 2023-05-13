@@ -7,6 +7,7 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const MenuItem = ({link, icon, text}) => {
     return (
@@ -44,6 +45,12 @@ export const AppHeader = () => {
             </nav>
         </header>
     );
+}
+
+MenuItem.propTypes = {
+    link: PropTypes.string,
+    icon: PropTypes.element,
+    text: PropTypes.string
 }
 
 export default AppHeader;
