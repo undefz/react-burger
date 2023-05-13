@@ -33,6 +33,11 @@ export const ProfileEditor = () => {
         setChanged(true);
     }
 
+    const changePassword = (e) => {
+        setProfileData({...profileData, password: e.target.value});
+        setChanged(true);
+    }
+
     const saveProfileData = () => {
         queryPatchUser(profileData)
             .then(response => {
@@ -46,10 +51,9 @@ export const ProfileEditor = () => {
     }
 
     return (<div className={"profileData"}>
-        <Input value={profileData ? profileData.name : ''} onChange={e => changeName(e)} placeholder="Имя" extraClass="mb-6"/>
-        <EmailInput value={profileData ? profileData.email : ''} onChange={e => changeEmail(e)} extraClass="mb-6"/>
-        <PasswordInput value="" onChange={e => {
-        }} extraClass="mb-6"/>
+        <Input value={profileData?.name || ''} onChange={e => changeName(e)} placeholder="Имя" extraClass="mb-6"/>
+        <EmailInput value={profileData?.email || ''} onChange={e => changeEmail(e)} extraClass="mb-6"/>
+        <PasswordInput value={profileData?.password || ''} onChange={e => changePassword(e)} extraClass="mb-6"/>
         {
             changed &&
             <>
