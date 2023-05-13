@@ -16,6 +16,8 @@ import {ProtectedRouteElement} from "../protected-route-element/protected-route-
 import Modal from "../modal/modal";
 import {useNavigate} from "react-router-dom";
 import {authUser} from "../../services/actions/user";
+import {ProfileEditor} from "../profile-editor/profile-editor";
+import {ProfileOrders} from "../profile-orders/profile-orders";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -60,13 +62,13 @@ const App = () => {
                 <Route path="register" element={
                     <ProtectedRouteElement checkAuth={false} element={
                         <RegisterPage/>
-                    } t = 'register'/>
+                    }/>
                 }/>
 
                 <Route path="/login" element={
                     <ProtectedRouteElement checkAuth={false} element={
                         <LoginPage/>
-                    } t = 'login'/>
+                    }/>
                 }/>
 
                 <Route path="/forgot-password" element={
@@ -84,8 +86,18 @@ const App = () => {
 
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
-                        <ProfilePage/>
-                    } t='profile'/>
+                        <ProfilePage>
+                            <ProfileEditor/>
+                        </ProfilePage>
+                    }/>
+                }/>
+
+                <Route path="/profile/orders" element={
+                    <ProtectedRouteElement element={
+                        <ProfilePage>
+                            <ProfileOrders/>
+                        </ProfilePage>
+                    }/>
                 }/>
 
                 <Route path="/ingredients/:id" element={

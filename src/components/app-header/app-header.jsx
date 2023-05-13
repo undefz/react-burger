@@ -8,33 +8,37 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink} from "react-router-dom";
 
+export const MenuItem = ({link, icon, text}) => {
+    return (
+        <NavLink to={link} className={styles.link}>
+        {({isActive}) => (
+            <div className={styles.menuItem}>
+                {icon(isActive)}
+                <p className={'text text_type_main-default ml-2 ' + (isActive ? 'text_color_primary' : '')}>{text}</p>
+            </div>
+        )}
+    </NavLink>
+    );
+}
+
 export const AppHeader = () => {
     return (
         <header className={styles.header}>
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
                     <div className={`${styles.twoBox} ${styles.first}`}>
-                        <li className={styles.menuItem}>
-                            <BurgerIcon type="primary"/>
-                            <NavLink to="/" className={styles.link}>
-                                {({isActive, isPending}) => (
-                                    <p className="text text_type_main-default ml-2">Конструктор</p>
-                                )}
-                            </NavLink>
+                        <li>
+                            <MenuItem link='/' icon = {active => <BurgerIcon type={active ? 'primary' : 'secondary'}/>} text='Конструктор'/>
                         </li>
-                        <li className={styles.menuItem}>
-                            <ListIcon type="secondary"/>
-                            <p className="text text_type_main-default text_color_inactive ml-2">Лента заказов</p>
+                        <li>
+                            <MenuItem link='/feed' icon = {active => <ListIcon type={active ? 'primary' : 'secondary'}/>} text='Лента заказов'/>
                         </li>
                     </div>
                     <li className={styles.menuItem}>
                         <Logo className={styles.logo}/>
                     </li>
-                    <li className={`${styles.menuItem} ${styles.last} mr-`}>
-                        <ProfileIcon type="secondary"/>
-                        <NavLink to={"/profile"} className={styles.link}>
-                            <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
-                        </NavLink>
+                    <li className={`${styles.menuItem} ${styles.last}`}>
+                        <MenuItem link='/profile' icon = {active => <ProfileIcon type={active ? 'primary' : 'secondary'}/>} text='Личный кабинет'/>
                     </li>
                 </ul>
             </nav>

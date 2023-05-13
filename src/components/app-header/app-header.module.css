@@ -35,6 +35,7 @@
 
 .first {
     justify-self: start;
+    align-items: center;
 }
 
 .logo {
@@ -50,5 +51,13 @@
     composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
     text-decoration: none;
     color: #8585AD;
+    cursor: pointer;
+}
+
+.activeLink {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    text-decoration: none;
+    color: #FFFFFF;
     cursor: pointer;
 }
