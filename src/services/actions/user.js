@@ -1,10 +1,17 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {queryEndpoint, removeTokens, saveTokens} from "../../utils/http";
+import {
+    queryGetUser,
+    removeTokens,
+    saveTokens,
+    queryLogout,
+    queryLogin,
+    queryRegister
+} from "../../utils/http";
 
 export const login = createAsyncThunk(
     'user/login',
     async ({email, password}) => {
-        return queryEndpoint('/auth/login', {email, password})
+        return queryLogin(email, password)
             .then(response => {
                 saveTokens(response);
                 return response;
@@ -15,22 +22,11 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
     'user/register',
     async ({email, password, name}) => {
-        return queryEndpoint('/auth/register', {email, password, name})
+        return queryRegister(email, password, name)
             .then(response => {
                 saveTokens(response);
                 return response;
             })
-    }
-)
-
-export const refreshToken = createAsyncThunk(
-    'auth/token',
-    async ({token}) => {
-        return queryEndpoint('/auth/token', {token})
-            .then(response => {
-                saveTokens(response);
-                return response;
-            });
     }
 )
 
@@ -38,7 +34,7 @@ export const logout = createAsyncThunk(
     'auth/logout',
     async () => {
         const refreshToken = localStorage.getItem('refreshToken');
-        return queryEndpoint('/auth/logout', {token: refreshToken})
+        return queryLogout(refreshToken)
             .then(() => {
                 removeTokens();
             })
@@ -46,3 +42,9 @@ export const logout = createAsyncThunk(
     }
 )
 
+export const authUser = createAsyncThunk(
+    'auth/getUser',
+    async () => {
+        return queryGetUser();
+    }
+)

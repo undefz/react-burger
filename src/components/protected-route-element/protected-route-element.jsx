@@ -7,7 +7,7 @@ export const ProtectedRouteElement = ({checkAuth = true, element}) => {
     const { isAuthed } = useSelector(state => state.user);
 
     if (checkAuth) {
-        return isAuthed ? element : <Navigate to="/login" replace/>;
+        return isAuthed ? element : <Navigate to="/login"/>;
     } else {
         if (isAuthed) {
             navigate(-1);

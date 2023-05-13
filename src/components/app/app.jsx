@@ -15,6 +15,7 @@ import {Page404} from "../../pages/page-404";
 import {ProtectedRouteElement} from "../protected-route-element/protected-route-element";
 import Modal from "../modal/modal";
 import {useNavigate} from "react-router-dom";
+import {authUser} from "../../services/actions/user";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -23,10 +24,14 @@ const App = () => {
     const location = useLocation();
     const showModal = location.state?.modal;
 
+    const user = useSelector(state => state.user);
+
     useEffect(() => {
         dispatch(fetchIngredients());
 
-
+        if (!user.isAuthed && localStorage.getItem('token')) {
+            dispatch(authUser());
+        }
     }, [dispatch]);
 
     const {isLoading, hasError} = useSelector(state => state.ingredients);

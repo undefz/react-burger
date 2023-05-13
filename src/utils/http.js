@@ -1,5 +1,25 @@
 import {BASE_URL} from "./app-config";
 
+export const queryGetUser = () => {
+    return queryEndpoint('/auth/user', null, true, 'GET');
+}
+
+export const queryPatchUser = (profileData) => {
+    return queryEndpoint('/auth/user', {...profileData}, true, 'PATCH');
+}
+
+export const queryLogin = (email, password) => {
+    return queryEndpoint('/auth/login', {email, password});
+}
+
+export const queryRegister = (email, password, name) => {
+    return queryEndpoint('/auth/register', {email, password, name});
+}
+
+export const queryLogout = (refreshToken) => {
+    return queryEndpoint('/auth/logout', {token: refreshToken})
+}
+
 export const queryEndpoint = async (url, body, auth = false, methodType = 'POST', attempt = 0) => {
     const headers = {'Content-Type': 'application/json'}
     if (auth) {
@@ -26,6 +46,23 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
             if (res.ok) {
                 return res.json();
             }
+            if (res.status === 403) {
+                console.log("Starting refreshing token");
+                const refreshToken = localStorage.getItem('refreshToken');
+                const request = {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({token: refreshToken}),
+                }
+                fetch(BASE_URL + "/auth/token", request)
+                    .then(res => {
+                        if (res.ok) {
+                            console.log(`Successful token refresh ${res}`);
+                            const tokenBody = res.json()
+                            saveTokens(tokenBody);
+                        }
+                    })
+            }
             return Promise.reject(`Ошибка ${res.status}`);
         })
         .then(decoded => {
@@ -36,6 +73,7 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
             }
         })
 }
+
 export const saveTokens = (response) => {
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);

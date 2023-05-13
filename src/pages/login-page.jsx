@@ -1,8 +1,8 @@
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from './common-styles.module.css';
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {login} from "../services/actions/user";
 
 export const LoginPage = () => {

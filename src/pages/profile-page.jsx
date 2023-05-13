@@ -4,7 +4,7 @@ import profileStyles from './profile-page-styles.module.css'
 import {useDispatch} from "react-redux";
 import {logout} from "../services/actions/user";
 import {useEffect, useState} from "react";
-import {queryEndpoint} from "../utils/http";
+import {queryGetUser, queryPatchUser} from "../utils/http";
 export const ProfilePage = () => {
 
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const ProfilePage = () => {
     const [changed, setChanged] = useState(false);
 
     const reloadData = () => {
-        queryEndpoint('/auth/user', null, true, 'GET')
+        queryGetUser()
             .then(response => {
                 if (response.success) {
                     setProfileData(response.user);
@@ -44,7 +44,7 @@ export const ProfilePage = () => {
     }
 
     const saveProfileData = () => {
-        queryEndpoint('/auth/user', {...profileData}, true, 'PATCH')
+        queryPatchUser(profileData)
             .then(response => {
                 if (response.success) {
                     console.log(`Данные обновлены ${JSON.stringify(response)}`);
