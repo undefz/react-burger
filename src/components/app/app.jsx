@@ -12,12 +12,15 @@ import {ResetPasswordPage} from "../../pages/reset-password-page";
 import {ProfilePage} from "../../pages/profile-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {Page404} from "../../pages/page-404";
+import {ProtectedRouteElement} from "../protected-route-element/protected-route-element";
 
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchIngredients())
+        dispatch(fetchIngredients());
+
+
     }, [dispatch]);
 
     const {isLoading, hasError} = useSelector(state => state.ingredients);
@@ -35,23 +38,34 @@ const App = () => {
                 }/>
 
                 <Route path="register" element={
-                    <RegisterPage/>
+                    <ProtectedRouteElement checkAuth={false} element={
+                        <RegisterPage/>
+                    }/>
                 }/>
 
                 <Route path="/login" element={
-                    <LoginPage/>
+                    <ProtectedRouteElement checkAuth={false} element={
+                        <LoginPage/>
+                    }/>
                 }/>
 
                 <Route path="/forgot-password" element={
-                    <ForgotPasswordPage/>
+                    <ProtectedRouteElement checkAuth={false} element={
+                        <ForgotPasswordPage/>
+                    }/>
                 }/>
 
+
                 <Route path="/reset-password" element={
-                    <ResetPasswordPage/>
+                    <ProtectedRouteElement checkAuth={false} element={
+                        <ResetPasswordPage/>
+                    }/>
                 }/>
 
                 <Route path="/profile" element={
-                    <ProfilePage/>
+                    <ProtectedRouteElement element={
+                        <ProfilePage/>
+                    }/>
                 }/>
 
                 <Route path="/ingredients/:id" element={

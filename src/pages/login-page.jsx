@@ -7,18 +7,12 @@ import {login} from "../services/actions/user";
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const user = useSelector(state => state.user);
 
-    useEffect(() => {
-        if (user.user) {
-            navigate('/');
-        }
-    }, [user, navigate]);
 
     const submitLogin = (e) => {
         e.preventDefault();
