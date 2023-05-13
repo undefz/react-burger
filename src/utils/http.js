@@ -30,6 +30,14 @@ export const queryOrder = (orderIds) => {
         .then(res => res.order.number);
 }
 
+export const queryForgotPassword = (email) => {
+    return queryEndpoint('/password-reset', {email});
+}
+
+export const queryResetPassword = (password, token) => {
+    return queryEndpoint('/password-reset/reset', {password, token});
+}
+
 export const queryEndpoint = async (url, body, auth = false, methodType = 'POST', attempt = 0) => {
     const headers = {'Content-Type': 'application/json'}
     if (auth) {
