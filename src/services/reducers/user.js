@@ -9,14 +9,22 @@ export const userSlice = createSlice({
         isAuthFailed: false,
         isResettingPassword: false
     },
+    reducers: {
+        setResettingPassword: (state) => {
+            state.isResettingPassword = true;
+        },
+        unsetResettingPassword: (state) => {
+            state.isResettingPassword = false;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
             state.user = action.payload.user;
             state.isAuthed = true;
             state.isAuthFailed = false;
-        }).addCase(login.pending, (state, action) => {
+        }).addCase(login.pending, (state) => {
             state.isAuthFailed = false;
-        }).addCase(login.rejected, (state, action) => {
+        }).addCase(login.rejected, (state) => {
             state.user = null;
             state.isAuthed = false;
             state.isAuthFailed = true;
@@ -24,11 +32,11 @@ export const userSlice = createSlice({
             state.user = action.payload.user;
             state.isAuthed = true;
             state.isAuthFailed = false;
-        }).addCase(register.pending, (state, action) => {
+        }).addCase(register.pending, (state) => {
             state.isAuthFailed = false;
-        }).addCase(register.rejected, (state, action) => {
+        }).addCase(register.rejected, (state) => {
             state.isAuthFailed = true;
-        }).addCase(logout.fulfilled, (state, action) => {
+        }).addCase(logout.fulfilled, (state) => {
             state.user = null;
             state.isAuthed = false;
         }).addCase(authUser.fulfilled, (state, action) => {
@@ -38,3 +46,5 @@ export const userSlice = createSlice({
         })
     }
 })
+
+export const {setResettingPassword, unsetResettingPassword} = userSlice.actions;

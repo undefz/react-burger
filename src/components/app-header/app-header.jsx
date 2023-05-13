@@ -38,7 +38,7 @@ export const AppHeader = () => {
                         <Logo className={styles.logo}/>
                     </li>
                     <li className={`${styles.menuItem} ${styles.last}`}>
-                        <MenuItem link='/profile' icon = {active => <ProfileIcon type={active ? 'primary' : 'secondary'}/>} text='Личный кабинет'/>
+                        <MenuItem link='/profile/' icon = {active => <ProfileIcon type={active ? 'primary' : 'secondary'}/>} text='Личный кабинет'/>
                     </li>
                 </ul>
             </nav>

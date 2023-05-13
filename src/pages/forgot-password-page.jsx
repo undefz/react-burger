@@ -3,15 +3,21 @@ import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-compon
 import {Link, useNavigate} from "react-router-dom";
 import {queryForgotPassword} from "../utils/http";
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {setResettingPassword} from "../services/reducers/user";
 
 export const ForgotPasswordPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const dispatch = useDispatch();
 
     const handleForgotPassword = (e) => {
         e.preventDefault();
         queryForgotPassword(email)
-            .then(() => navigate('/reset-password'))
+            .then(() => {
+                dispatch(setResettingPassword());
+                navigate('/reset-password');
+            })
     }
 
     return (

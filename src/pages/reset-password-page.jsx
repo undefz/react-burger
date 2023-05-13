@@ -3,17 +3,21 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {queryResetPassword} from "../utils/http";
+import {useDispatch} from "react-redux";
+import {unsetResettingPassword} from "../services/reducers/user";
 
 export const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleResetPassword = (e) => {
         e.preventDefault();
         queryResetPassword(password, token)
             .then(() => {
+                dispatch(unsetResettingPassword());
                 navigate('/login')
             })
     }

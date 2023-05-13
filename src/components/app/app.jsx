@@ -38,7 +38,7 @@ const App = () => {
         if (!user.isAuthed && localStorage.getItem('token')) {
             dispatch(authUser());
         }
-    }, [dispatch]);
+    }, [dispatch, user]);
 
     const {isLoading, hasError} = useSelector(state => state.ingredients);
 
@@ -77,12 +77,15 @@ const App = () => {
                     }/>
                 }/>
 
-
-                <Route path="/reset-password" element={
-                    <ProtectedRouteElement checkAuth={false} element={
-                        <ResetPasswordPage/>
-                    }/>
-                }/>
+                {
+                    user.isResettingPassword && (
+                        <Route path="/reset-password" element={
+                            <ProtectedRouteElement checkAuth={false} element={
+                                <ResetPasswordPage/>
+                            }/>
+                        }/>
+                    )
+                }
 
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
