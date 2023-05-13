@@ -3,7 +3,7 @@ import AppHeader from "../app-header/app-header";
 import styles from "./app.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchIngredients} from "../../services/actions/burger-ingredients";
-import {Route, Routes} from "react-router";
+import {Route, Routes, useLocation} from "react-router";
 import {RegisterPage} from "../../pages/register-page";
 import {MainPage} from "../../pages/main-page";
 import {LoginPage} from "../../pages/login-page";
@@ -13,9 +13,15 @@ import {ProfilePage} from "../../pages/profile-page";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {Page404} from "../../pages/page-404";
 import {ProtectedRouteElement} from "../protected-route-element/protected-route-element";
+import Modal from "../modal/modal";
+import {useNavigate} from "react-router-dom";
 
 const App = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const location = useLocation();
+    const showModal = location.state?.modal;
 
     useEffect(() => {
         dispatch(fetchIngredients());
@@ -24,6 +30,10 @@ const App = () => {
     }, [dispatch]);
 
     const {isLoading, hasError} = useSelector(state => state.ingredients);
+
+    const onModalClose = () => {
+        navigate(-1);
+    }
 
     return (
         <div className={styles.app}>
@@ -69,7 +79,16 @@ const App = () => {
                 }/>
 
                 <Route path="/ingredients/:id" element={
-                   <IngredientDetails/>
+                    showModal
+                        ?
+                        (
+                            <Modal closeModal={onModalClose}>
+                                <IngredientDetails/>
+                            </Modal>
+                        )
+                        : (
+                            <IngredientDetails/>
+                        )
                 }/>
 
                 <Route path="*" element={

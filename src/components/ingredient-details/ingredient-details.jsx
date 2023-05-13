@@ -1,8 +1,14 @@
 import styles from "./ingredient-details.module.css"
 import {useSelector} from "react-redux";
+import {useParams} from "react-router";
 
 const IngredientDetails = () => {
-    const ingredient = useSelector(state => state.ingredientDetails.selected);
+    const {id} = useParams();
+    const ingredient = useSelector(state => state.ingredients.items).find(x => x._id === id);
+
+    if (!ingredient) {
+        return <></>;
+    }
 
     return (
         <div className={`${styles.detailsMain}`}>
