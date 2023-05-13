@@ -27,6 +27,10 @@ const App = () => {
     const user = useSelector(state => state.user);
 
     useEffect(() => {
+        console.log('Page navigated to: ', location.pathname);
+    }, [location]);
+
+    useEffect(() => {
         dispatch(fetchIngredients());
 
         if (!user.isAuthed && localStorage.getItem('token')) {
@@ -37,6 +41,7 @@ const App = () => {
     const {isLoading, hasError} = useSelector(state => state.ingredients);
 
     const onModalClose = () => {
+        console.log("Navigating from modal close");
         navigate(-1);
     }
 
@@ -55,13 +60,13 @@ const App = () => {
                 <Route path="register" element={
                     <ProtectedRouteElement checkAuth={false} element={
                         <RegisterPage/>
-                    }/>
+                    } t = 'register'/>
                 }/>
 
                 <Route path="/login" element={
                     <ProtectedRouteElement checkAuth={false} element={
                         <LoginPage/>
-                    }/>
+                    } t = 'login'/>
                 }/>
 
                 <Route path="/forgot-password" element={
@@ -80,7 +85,7 @@ const App = () => {
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
                         <ProfilePage/>
-                    }/>
+                    } t='profile'/>
                 }/>
 
                 <Route path="/ingredients/:id" element={
