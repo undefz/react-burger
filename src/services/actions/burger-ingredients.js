@@ -1,10 +1,10 @@
-import {REMOTE_URL} from "../../utils/app-config";
+import {INGREDIENTS_URL} from "../../utils/app-config";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
 export const fetchIngredients = createAsyncThunk(
     'ingredients/fetchIngredients',
     async () => {
-        return fetch(REMOTE_URL)
+        return fetch(INGREDIENTS_URL)
             .then(res => {
                 if (res.ok) {
                     return res.json();

@@ -16,7 +16,7 @@ export const AppHeader = () => {
                     <div className={`${styles.twoBox} ${styles.first}`}>
                         <li className={styles.menuItem}>
                             <BurgerIcon type="primary"/>
-                            <NavLink to="/">
+                            <NavLink to="/" className={styles.link}>
                                 {({isActive, isPending}) => (
                                     <p className="text text_type_main-default ml-2">Конструктор</p>
                                 )}
@@ -32,7 +32,9 @@ export const AppHeader = () => {
                     </li>
                     <li className={`${styles.menuItem} ${styles.last} mr-`}>
                         <ProfileIcon type="secondary"/>
-                        <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
+                        <NavLink to={"/profile"} className={styles.link}>
+                            <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
+                        </NavLink>
                     </li>
                 </ul>
             </nav>

@@ -16,6 +16,7 @@
     composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
     text-decoration: none;
     color: #8585AD;
+    cursor: pointer;
 }
 
 .sideComment {

@@ -1,5 +1,6 @@
-export const REMOTE_URL = "https://norma.nomoreparties.space/api/ingredients";
-export const ORDER_URL = "https://norma.nomoreparties.space/api/orders";
+export const BASE_URL = "https://norma.nomoreparties.space/api";
+export const INGREDIENTS_URL = BASE_URL + "/api/ingredients";
+export const ORDER_URL = BASE_URL + "/api/orders";
 
 export const TYPE_BUN = "bun";
 export const TYPE_SAUCE = "sauce";
