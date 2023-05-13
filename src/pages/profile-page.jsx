@@ -12,26 +12,35 @@ export const ProfilePage = () => {
 
     const [profileData, setProfileData] = useState(null);
 
-    useEffect(() => {
+    const [changed, setChanged] = useState(false);
+
+    const reloadData = () => {
         queryEndpoint('/auth/user', null, true, 'GET')
             .then(response => {
                 if (response.success) {
                     setProfileData(response.user);
+                    setChanged(false);
                 }
             })
+    }
+
+    useEffect(() => {
+        reloadData();
     }, [])
 
     const clickLogout = () => {
         dispatch(logout());
-        navigate("/");
+        navigate("/login");
     }
 
     const changeName = (e) => {
         setProfileData({...profileData, name: e.target.value});
+        setChanged(true);
     }
 
     const changeEmail = (e) => {
         setProfileData({...profileData, email: e.target.value});
+        setChanged(true);
     }
 
     const saveProfileData = () => {
@@ -58,8 +67,13 @@ export const ProfilePage = () => {
                 <EmailInput value={profileData ? profileData.email : ''} onChange={e => changeEmail(e)} extraClass="mb-6"/>
                 <PasswordInput value="" onChange={e => {
                 }} extraClass="mb-6"/>
-
-                <Button htmlType="button" size="medium" extraClass="mb-20" onClick={saveProfileData}>Сохранить</Button>
+                {
+                    changed &&
+                    <>
+                        <Button htmlType="button" size="medium" extraClass="mb-20" onClick={saveProfileData}>Сохранить</Button>
+                        <Button htmlType="button" size="medium" extraClass="mb-20 ml-5" onClick={reloadData}>Отменить</Button>
+                    </>
+                }
             </div>
         </div>
     )
