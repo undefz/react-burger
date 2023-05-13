@@ -34,11 +34,13 @@ const App = () => {
 
     useEffect(() => {
         dispatch(fetchIngredients());
+    }, [dispatch]);
 
+    useEffect(() => {
         if (!user.isAuthed && localStorage.getItem('token')) {
             dispatch(authUser());
         }
-    }, [dispatch, user]);
+    }, [dispatch, user.isAuthed]);
 
     const {isLoading, hasError} = useSelector(state => state.ingredients);
 
