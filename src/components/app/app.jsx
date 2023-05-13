@@ -91,19 +91,12 @@ const App = () => {
 
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
-                        <ProfilePage>
-                            <ProfileEditor/>
-                        </ProfilePage>
+                        <ProfilePage/>
                     }/>
-                }/>
-
-                <Route path="/profile/orders" element={
-                    <ProtectedRouteElement element={
-                        <ProfilePage>
-                            <ProfileOrders/>
-                        </ProfilePage>
-                    }/>
-                }/>
+                }>
+                    <Route index element={<ProfileEditor/>}/>
+                    <Route path='orders' element={<ProfileOrders/>}/>
+                </Route>
 
                 <Route path="/ingredients/:id" element={
                     showModal

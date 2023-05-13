@@ -1,9 +1,8 @@
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import profileStyles from './profile-page-styles.module.css'
 import {useDispatch} from "react-redux";
 import {logout} from "../services/actions/user";
-import PropTypes from "prop-types";
-export const ProfilePage = ({children}) => {
+export const ProfilePage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const clickLogout = () => {
@@ -23,11 +22,7 @@ export const ProfilePage = ({children}) => {
                 <p className={profileStyles.sideLink} onClick={clickLogout}>Выход</p>
                 <span className={profileStyles.sideComment}>В этом разделе вы можете изменить свои персональные данные</span>
             </div>
-            {children}
+            <Outlet/>
         </div>
     )
-}
-
-ProfilePage.propTypes = {
-    children: PropTypes.element
 }
