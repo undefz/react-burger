@@ -1,6 +1,7 @@
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useEffect, useState} from "react";
 import {queryGetUser, queryPatchUser} from "../../utils/http";
+import {Form} from "react-router-dom";
 
 export const ProfileEditor = () => {
     const [profileData, setProfileData] = useState(null);
@@ -38,7 +39,8 @@ export const ProfileEditor = () => {
         setChanged(true);
     }
 
-    const saveProfileData = () => {
+    const saveProfileData = (e) => {
+        e.preventDefault();
         queryPatchUser(profileData)
             .then(response => {
                 if (response.success) {
@@ -51,15 +53,17 @@ export const ProfileEditor = () => {
     }
 
     return (<div className={"profileData"}>
-        <Input value={profileData?.name || ''} onChange={e => changeName(e)} placeholder="Имя" extraClass="mb-6"/>
-        <EmailInput value={profileData?.email || ''} onChange={e => changeEmail(e)} extraClass="mb-6"/>
-        <PasswordInput value={profileData?.password || ''} onChange={e => changePassword(e)} extraClass="mb-6"/>
-        {
-            changed &&
-            <>
-                <Button htmlType="button" size="medium" extraClass="mb-20" onClick={saveProfileData}>Сохранить</Button>
-                <Button htmlType="button" size="medium" extraClass="mb-20 ml-5" onClick={reloadData}>Отменить</Button>
-            </>
-        }
+        <form onSubmit={saveProfileData}>
+            <Input value={profileData?.name || ''} onChange={e => changeName(e)} placeholder="Имя" extraClass="mb-6"/>
+            <EmailInput value={profileData?.email || ''} onChange={e => changeEmail(e)} extraClass="mb-6"/>
+            <PasswordInput value={profileData?.password || ''} onChange={e => changePassword(e)} extraClass="mb-6"/>
+            {
+                changed &&
+                <>
+                    <Button htmlType="submit" size="medium" extraClass="mb-20">Сохранить</Button>
+                    <Button htmlType="button" size="medium" extraClass="mb-20 ml-5" onClick={reloadData}>Отменить</Button>
+                </>
+            }
+        </form>
     </div>)
 }

@@ -21,3 +21,9 @@
     color: #4C4CFF;
     text-decoration: none;
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
