@@ -15,9 +15,7 @@
 
 .detailsHeader {
     composes: text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
-    margin-right: auto;
 
-    composes: ml-15 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
     composes: mt-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
     composes: pt-3 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }

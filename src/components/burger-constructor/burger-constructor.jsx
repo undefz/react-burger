@@ -10,23 +10,31 @@ import {ITEM_TYPES, TYPE_BUN} from "../../utils/app-config";
 import {addIngredient, moveIngredient, removeIngredient, selectBun} from "../../services/reducers/burger-constructor";
 import {makeOrder} from "../../services/actions/order-details";
 import {closeModal} from "../../services/reducers/order-details";
+import {useNavigate} from "react-router-dom";
 
 export const BurgerConstructor = () => {
     const dispatch = useDispatch();
 
     const basket = useSelector(state => state.basket.items);
     const bun = useSelector(state => state.basket.bun);
+    const user = useSelector(state => state.user);
+    const navigate = useNavigate();
 
     const orderDetails = useSelector(state => state.orderDetails);
 
     const onButtonClick = () => {
-        const orderIds = basket.map(x => x._id);
-        if (bun) {
-            orderIds.push(bun._id);
-            orderIds.push(bun._id);
-        }
+        console.log(`USER ${JSON.stringify(user)}`)
+        if (user?.isAuthed) {
+            const orderIds = basket.map(x => x._id);
+            if (bun) {
+                orderIds.push(bun._id);
+                orderIds.push(bun._id);
+            }
 
-        dispatch(makeOrder(orderIds))
+            dispatch(makeOrder(orderIds))
+        } else {
+            navigate('/login');
+        }
     }
     const onModalClose = () => {
         dispatch(closeModal())

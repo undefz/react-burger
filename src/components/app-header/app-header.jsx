@@ -6,6 +6,25 @@ import {
     Logo,
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import {useLocation} from "react-router";
+
+export const MenuItem = ({link, icon, text}) => {
+    const location = useLocation();
+    const isActive = link === "/"
+        ? location.pathname === link
+        : location.pathname.startsWith(link);
+
+    return (
+        <Link to={link} className={styles.link}>
+            <div className={styles.menuItem}>
+                {icon(isActive)}
+                <p className={'text text_type_main-default ml-2 ' + (isActive ? 'text_color_primary' : '')}>{text}</p>
+            </div>
+        </Link>
+    );
+}
 
 export const AppHeader = () => {
     return (
@@ -13,26 +32,29 @@ export const AppHeader = () => {
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
                     <div className={`${styles.twoBox} ${styles.first}`}>
-                        <li className={styles.menuItem}>
-                            <BurgerIcon type="primary"/>
-                            <p className="text text_type_main-default ml-2">Конструктор</p>
+                        <li>
+                            <MenuItem link='/' icon = {active => <BurgerIcon type={active ? 'primary' : 'secondary'}/>} text='Конструктор'/>
                         </li>
-                        <li className={styles.menuItem}>
-                            <ListIcon type="secondary"/>
-                            <p className="text text_type_main-default text_color_inactive ml-2">Лента заказов</p>
+                        <li>
+                            <MenuItem link='/feed' icon = {active => <ListIcon type={active ? 'primary' : 'secondary'}/>} text='Лента заказов'/>
                         </li>
                     </div>
                     <li className={styles.menuItem}>
                         <Logo className={styles.logo}/>
                     </li>
-                    <li className={`${styles.menuItem} ${styles.last} mr-`}>
-                        <ProfileIcon type="secondary"/>
-                        <p className="text text_type_main-default text_color_inactive ml-2">Личный кабинет</p>
+                    <li className={`${styles.menuItem} ${styles.last}`}>
+                        <MenuItem link='/profile/' icon = {active => <ProfileIcon type={active ? 'primary' : 'secondary'}/>} text='Личный кабинет'/>
                     </li>
                 </ul>
             </nav>
         </header>
     );
+}
+
+MenuItem.propTypes = {
+    link: PropTypes.string.isRequired,
+    icon: PropTypes.func.isRequired,
+    text: PropTypes.string.isRequired
 }
 
 export default AppHeader;
