@@ -6,9 +6,11 @@ import PropTypes from "prop-types";
 import {useDrag} from "react-dnd";
 import {ITEM_TYPES} from "../../../utils/app-config";
 import {useNavigate} from "react-router-dom";
+import {useLocation} from "react-router";
 
 export const IngredientItem = ({item, count}) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [, dragRef] = useDrag({
         type: ITEM_TYPES.INGREDIENT_CARD,
@@ -16,7 +18,7 @@ export const IngredientItem = ({item, count}) => {
     });
 
     const onItemClick = () => {
-        navigate(`/ingredients/${item._id}`, {state: {modal: true}})
+        navigate(`/ingredients/${item._id}`, {state: {backgroundLocation: location}})
     }
 
     return (

@@ -24,7 +24,7 @@ const App = () => {
     const navigate = useNavigate();
 
     const location = useLocation();
-    const showModal = location.state?.modal;
+    const state = location.state;
 
     const user = useSelector(state => state.user);
 
@@ -53,8 +53,8 @@ const App = () => {
         <div className={styles.app}>
             <AppHeader/>
 
-            <Routes>
-                <Route path="/" element={
+            <Routes location={state?.backgroundLocation || location}>
+                <Route index element={
                     !isLoading &&
                     !hasError && (
                         <MainPage/>
@@ -99,16 +99,7 @@ const App = () => {
                 </Route>
 
                 <Route path="/ingredients/:id" element={
-                    showModal
-                        ?
-                        (
-                            <Modal closeModal={onModalClose}>
-                                <IngredientDetails/>
-                            </Modal>
-                        )
-                        : (
-                            <IngredientDetails/>
-                        )
+                    <IngredientDetails/>
                 }/>
 
                 <Route path="*" element={
@@ -116,6 +107,16 @@ const App = () => {
                 }/>
             </Routes>
 
+            {
+                state?.backgroundLocation &&
+                <Routes>
+                <Route path="/ingredients/:id" element={
+                    <Modal closeModal={onModalClose}>
+                        <IngredientDetails/>
+                    </Modal>
+                }/>
+            </Routes>
+            }
         </div>
     );
 }
