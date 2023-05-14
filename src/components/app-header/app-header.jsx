@@ -12,7 +12,9 @@ import {useLocation} from "react-router";
 
 export const MenuItem = ({link, icon, text}) => {
     const location = useLocation();
-    const isActive = location.pathname.startsWith(link);
+    const isActive = link === "/"
+        ? location.pathname === link
+        : location.pathname.startsWith(link);
 
     return (
         <Link to={link} className={styles.link}>
