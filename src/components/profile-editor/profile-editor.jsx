@@ -1,7 +1,6 @@
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useEffect, useState} from "react";
 import {queryGetUser, queryPatchUser} from "../../utils/http";
-import {Form} from "react-router-dom";
 
 export const ProfileEditor = () => {
     const [profileData, setProfileData] = useState(null);
