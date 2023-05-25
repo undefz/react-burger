@@ -1,20 +1,20 @@
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import styles from './common-styles.module.css';
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import {login} from "../services/actions/user";
+import {useAppDispatch, useAppSelector} from "../services/hooks";
 
 export const LoginPage = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const user = useSelector(state => state.user);
+    const user = useAppSelector(state => state.user);
 
 
-    const submitLogin = (e) => {
+    const submitLogin = (e: FormEvent) => {
         e.preventDefault();
         dispatch(login({email, password}));
     }

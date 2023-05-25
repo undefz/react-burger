@@ -1,6 +1,7 @@
 import {TYPE_BUN} from "./app-config";
+import {TBasket, TIngredient, TIngredientPosition} from "./burger-prop-types";
 
-export const getBasketName = (name, type) => {
+export const getBasketName = (name: string, type?: TIngredientPosition) => {
     if (type === "top") {
         return name + " (верх)";
     }
@@ -9,7 +10,7 @@ export const getBasketName = (name, type) => {
     }
     return name;
 }
-export const calculateCount = (basket, item) => {
+export const calculateCount = (basket: TBasket, item: TIngredient) => {
     if (item.type === TYPE_BUN) {
         if (item === basket.bun) {
             return 2;

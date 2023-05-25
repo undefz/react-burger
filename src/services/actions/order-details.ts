@@ -3,6 +3,6 @@ import {queryOrder} from "../../utils/http";
 
 export const makeOrder = createAsyncThunk(
     'order/makeOrder',
-    async (orderIds) => {
+    async (orderIds: Array<string>) => {
         return queryOrder(orderIds);
     })

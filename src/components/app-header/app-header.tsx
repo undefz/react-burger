@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ReactElement} from 'react'
 import styles from "./app-header.module.css";
 import {
     BurgerIcon,
@@ -7,10 +7,14 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 import {useLocation} from "react-router";
 
-export const MenuItem = ({link, icon, text}) => {
+type TMenuItemProps = {
+    link: string;
+    icon: (isActive: boolean) => ReactElement;
+    text: string;
+}
+export const MenuItem = ({link, icon, text}: TMenuItemProps) => {
     const location = useLocation();
     const isActive = link === "/"
         ? location.pathname === link
@@ -40,7 +44,7 @@ export const AppHeader = () => {
                         </li>
                     </div>
                     <li className={styles.menuItem}>
-                        <Logo className={styles.logo}/>
+                        <Logo/>
                     </li>
                     <li className={`${styles.menuItem} ${styles.last}`}>
                         <MenuItem link='/profile/' icon = {active => <ProfileIcon type={active ? 'primary' : 'secondary'}/>} text='Личный кабинет'/>
@@ -49,12 +53,6 @@ export const AppHeader = () => {
             </nav>
         </header>
     );
-}
-
-MenuItem.propTypes = {
-    link: PropTypes.string.isRequired,
-    icon: PropTypes.func.isRequired,
-    text: PropTypes.string.isRequired
 }
 
 export default AppHeader;

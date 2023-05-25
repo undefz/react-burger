@@ -1,15 +1,15 @@
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
 import styles from "./common-styles.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {register} from "../services/actions/user";
+import {useAppDispatch, useAppSelector} from "../services/hooks";
 
 export const RegisterPage = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const user = useSelector(state => state.user);
+    const user = useAppSelector(state => state.user);
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -21,9 +21,10 @@ export const RegisterPage = () => {
         }
     }, [user, navigate]);
 
-    const submitRegister = (e) => {
+    const submitRegister = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(register({email, password, name}))
+        const action: {email: string, password: string, name: string} = {email, password, name}
+        dispatch(register(action))
     }
 
     return (

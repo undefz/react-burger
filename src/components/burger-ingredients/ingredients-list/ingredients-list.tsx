@@ -1,15 +1,20 @@
 import {IngredientItem} from "../ingredients-item/ingredients-item";
 import styles from "./ingreidients-list.module.css"
 import React, {useMemo} from "react";
-import PropTypes from "prop-types";
-import {INGREDIENTS_ARRAY} from "../../../utils/burger-prop-types";
+import {TIngredient} from "../../../utils/burger-prop-types";
 import {calculateCount} from "../../../utils/utils";
-import {useSelector} from "react-redux";
-export const IngredientsList = React.forwardRef(({header, ingredientsList}, ref) => {
-    const basket = useSelector(state => state.basket);
+import {useAppSelector} from "../../../services/hooks";
+
+type TIngredientsListProps = {
+    header: string;
+    ingredientsList: Array<TIngredient>;
+}
+
+export const IngredientsList = React.forwardRef<HTMLDivElement, TIngredientsListProps>(({header, ingredientsList}, ref) => {
+    const basket = useAppSelector(state => state.basket);
 
     const ingredientCount = useMemo(() => {
-        return ingredientsList.map(item => [item, calculateCount(basket, item)])
+        return ingredientsList.map<[TIngredient, number]>(item => [item, calculateCount(basket, item)])
     }, [basket, ingredientsList]);
 
     return (<div ref={ref}>
@@ -21,8 +26,3 @@ export const IngredientsList = React.forwardRef(({header, ingredientsList}, ref)
         </div>
     </div>);
 })
-
-IngredientsList.propTypes = {
-    header: PropTypes.string.isRequired,
-    ingredientsList: INGREDIENTS_ARRAY.isRequired
-}

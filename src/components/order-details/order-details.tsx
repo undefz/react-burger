@@ -1,8 +1,8 @@
 import doneImagePath from "../../images/done.svg"
 import styles from "./order-details.module.css"
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../services/hooks";
 const OrderDetails = () => {
-    const orderId = useSelector(state => state.orderDetails.orderId)
+    const orderId = useAppSelector(state => state.orderDetails.orderId)
 
     return (
         <div className={`${styles.orderContainer} mt-30 mb-30`}>

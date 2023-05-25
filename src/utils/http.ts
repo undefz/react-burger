@@ -1,45 +1,79 @@
 import {BASE_URL} from "./app-config";
+import {TIngredient, TProfileData} from "./burger-prop-types";
 
-export const queryGetUser = () => {
-    return queryEndpoint('/auth/user', null, true, 'GET');
+type TResponse = {
+    success: boolean;
 }
 
-export const queryPatchUser = (profileData) => {
+export type TUserResponse = {
+    user: TProfileData;
+}
+
+type TIngredientsResponse = {
+    data: Array<TIngredient>;
+}
+
+type TOrder = {
+    number: number;
+}
+
+type TOrderResponse = {
+    order: TOrder;
+}
+
+export type TTokenResponse = {
+    accessToken: string;
+    refreshToken: string;
+}
+
+export const queryGetUser = (): Promise<TProfileData> => {
+    return queryEndpoint<TUserResponse>('/auth/user', undefined, true, 'GET')
+        .then(response => response.user);
+}
+
+export const queryPatchUser = (profileData: TProfileData) => {
     return queryEndpoint('/auth/user', {...profileData}, true, 'PATCH');
 }
 
-export const queryLogin = (email, password) => {
+export const queryLogin = (email: string, password: string): Promise<TTokenResponse & TUserResponse> => {
     return queryEndpoint('/auth/login', {email, password});
 }
 
-export const queryRegister = (email, password, name) => {
+export const queryRegister = (email: string, password: string, name: string): Promise<TTokenResponse & TUserResponse> => {
     return queryEndpoint('/auth/register', {email, password, name});
 }
 
-export const queryLogout = (refreshToken) => {
+export const queryLogout = (refreshToken: string|null) => {
+    if (!refreshToken) {
+        return Promise.resolve();
+    }
     return queryEndpoint('/auth/logout', {token: refreshToken})
 }
 
-export const queryIngredients = () => {
-    return queryEndpoint('/ingredients', null, false, 'GET')
+export const queryIngredients = (): Promise<Array<TIngredient>> => {
+    return queryEndpoint<TIngredientsResponse>('/ingredients', undefined, false, 'GET')
         .then(res => res.data);
 }
 
-export const queryOrder = (orderIds) => {
-    return queryEndpoint('/orders', {ingredients: orderIds}, false, 'POST')
+export const queryOrder = (orderIds: Array<string>): Promise<number> => {
+    return queryEndpoint<TOrderResponse>('/orders', {ingredients: orderIds}, false, 'POST')
         .then(res => res.order.number);
 }
 
-export const queryForgotPassword = (email) => {
+export const queryForgotPassword = (email: string) => {
     return queryEndpoint('/password-reset', {email});
 }
 
-export const queryResetPassword = (password, token) => {
+export const queryResetPassword = (password: string, token: string) => {
     return queryEndpoint('/password-reset/reset', {password, token});
 }
 
-export const queryEndpoint = async (url, body, auth = false, methodType = 'POST', attempt = 0) => {
-    const headers = {'Content-Type': 'application/json'}
+const queryEndpoint = async <T = unknown>(url: string,
+                                body: object|undefined,
+                                auth: boolean = false,
+                                methodType: string = 'POST',
+                                attempt: number = 0): Promise<T> => {
+    const headers: HeadersInit = {'Content-Type': 'application/json'}
     if (auth) {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -48,7 +82,7 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
         headers['Authorization'] = token;
     }
 
-    const request = {
+    const request: RequestInit = {
         method: methodType,
         headers: headers
     };
@@ -64,7 +98,7 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
             if (res.status === 403 && attempt === 0) {
                 console.log("Starting refreshing token");
                 const refreshToken = localStorage.getItem('refreshToken');
-                const request = {
+                const request: RequestInit = {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({token: refreshToken}),
@@ -72,7 +106,7 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
                 return fetch(BASE_URL + "/auth/token", request)
                     .then(res => {
                         if (res.ok) {
-                            return res.json()
+                            return (res.json() as Promise<TTokenResponse>)
                                 .then(tokenBody => {
                                     console.log(`Successful token refresh ${JSON.stringify(tokenBody)}`);
                                     saveTokens(tokenBody);
@@ -83,7 +117,7 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
             }
 
             if (res.ok) {
-                return res.json()
+                return (res.json() as Promise<TResponse & T>)
                     .then(decoded => {
                         if (decoded.success) {
                             return decoded;
@@ -98,7 +132,7 @@ export const queryEndpoint = async (url, body, auth = false, methodType = 'POST'
 
 }
 
-export const saveTokens = (response) => {
+export const saveTokens = (response: TTokenResponse) => {
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);
 }

@@ -10,7 +10,7 @@ import {
 
 export const login = createAsyncThunk(
     'user/login',
-    async ({email, password}) => {
+    async ({email, password}: {email: string, password: string}) => {
         return queryLogin(email, password)
             .then(response => {
                 saveTokens(response);
@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
     'user/register',
-    async ({email, password, name}) => {
+    async ({email, password, name}: {email: string, password: string, name: string}) => {
         return queryRegister(email, password, name)
             .then(response => {
                 saveTokens(response);

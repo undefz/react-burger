@@ -1,14 +1,24 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {login, register, logout, authUser} from "../actions/user";
+import {TProfileData} from "../../utils/burger-prop-types";
 
+type TUserState = {
+    user: TProfileData|null;
+    isAuthed: boolean;
+    isAuthFailed: boolean;
+
+    isResettingPassword: boolean;
+}
+
+const initialState: TUserState = {
+    user: null,
+    isAuthed: false,
+    isAuthFailed: false,
+    isResettingPassword: false
+}
 export const userSlice = createSlice({
     name: 'user',
-    initialState: {
-        user: null,
-        isAuthed: false,
-        isAuthFailed: false,
-        isResettingPassword: false
-    },
+    initialState,
     reducers: {
         setResettingPassword: (state) => {
             state.isResettingPassword = true;
@@ -40,7 +50,7 @@ export const userSlice = createSlice({
             state.user = null;
             state.isAuthed = false;
         }).addCase(authUser.fulfilled, (state, action) => {
-            state.user = action.payload.user;
+            state.user = action.payload;
             state.isAuthed = true;
             state.isAuthFailed = false;
         })

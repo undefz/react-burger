@@ -1,12 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
+import {TBasket} from "../../utils/burger-prop-types";
+
+const initialState: TBasket = {
+    items: [],
+    bun: null
+};
 
 export const constructorSlice = createSlice({
     name: 'basket',
-    initialState: {
-        items: [],
-        bun: null
-    },
+    initialState,
     reducers: {
         selectBun: (state, action) => {
             state.bun = action.payload;
@@ -27,4 +30,4 @@ export const constructorSlice = createSlice({
     }
 })
 
-export const {selectBun, addIngredient, removeIngredient, moveIngredient, fillBasket} = constructorSlice.actions;
+export const {selectBun, addIngredient, removeIngredient, moveIngredient} = constructorSlice.actions;
