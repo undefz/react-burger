@@ -1,0 +1,94 @@
+.orderCard {
+    background: #1C1C21;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+
+.detailsBlock {
+    margin: 24px;
+}
+
+.orderNumber {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+}
+
+.date {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-small from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_inactive from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+}
+
+.orderName {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.topBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottomBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.priceBlock {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.circling {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    background:
+            linear-gradient(0, #131316, #131316) padding-box,
+            linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%) border-box;
+    border: 2px solid transparent;
+}
+
+.ingredientStack {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    position: relative;
+}
+
+.ingredientStack .child {
+    position: relative;
+    z-index: 1;
+    margin-right: -16px;
+}
+
+.ingredientStack .child:first-child {
+    z-index: 0;
+}
+
+.imageText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin-top: -72px;
+    background: #1C1C21;
+    opacity: 0.6;
+    composes: text_type_main-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}

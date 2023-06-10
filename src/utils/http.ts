@@ -56,7 +56,7 @@ export const queryIngredients = (): Promise<Array<TIngredient>> => {
 }
 
 export const queryOrder = (orderIds: Array<string>): Promise<number> => {
-    return queryEndpoint<TOrderResponse>('/orders', {ingredients: orderIds}, false, 'POST')
+    return queryEndpoint<TOrderResponse>('/orders', {ingredients: orderIds}, true, 'POST')
         .then(res => res.order.number);
 }
 

@@ -18,6 +18,7 @@ import {authUser} from "../../services/actions/user";
 import {ProfileEditor} from "../profile-editor/profile-editor";
 import {ProfileOrders} from "../profile-orders/profile-orders";
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
+import {OrderFeed} from "../order-feed/order-feed";
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -88,6 +89,10 @@ const App = () => {
                         }/>
                     )
                 }
+
+                <Route path="/feed" element={
+                    <OrderFeed/>
+                }/>
 
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
