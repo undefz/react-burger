@@ -8,13 +8,16 @@ import {userSlice} from "./reducers/user";
 import {socketMiddleware} from "./middleware/socket-middleware";
 import {feedActions} from "./actions/feed";
 import {feedSlice} from "./reducers/feed";
+import {orderHistorySlice} from "./reducers/order-history";
+import {orderHistoryActions} from "./actions/order-history";
 
 const rootReducer = combineReducers({
     ingredients: ingredientsSlice.reducer,
     basket: constructorSlice.reducer,
     orderDetails: orderDetailsSlice.reducer,
     user: userSlice.reducer,
-    feed: feedSlice.reducer
+    feed: feedSlice.reducer,
+    orderHistory: orderHistorySlice.reducer
 })
 
 export const store = configureStore({
@@ -22,7 +25,8 @@ export const store = configureStore({
     middleware: defaultMiddleware => defaultMiddleware().concat(
         thunk,
         logger,
-        socketMiddleware(feedActions)
+        socketMiddleware(feedActions),
+        socketMiddleware(orderHistoryActions)
     ),
     devTools: process.env.NODE_ENV !== 'production'
 })

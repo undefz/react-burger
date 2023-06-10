@@ -1,8 +1,8 @@
-import {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo} from "react";
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
 import {feedActions} from "../../services/actions/feed";
-import {OrderCard} from "../order-card/order-card";
 import styles from "./order-feed.module.css"
+import {OrderList} from "../order-list/order-list";
 
 export const OrderFeed = () => {
     const dispatch = useAppDispatch();
@@ -27,11 +27,7 @@ export const OrderFeed = () => {
         <>
             <h1 className={`${styles.sectionHeader} mt-10 mb-4`}>Лента заказов</h1>
             <div className={styles.orderView}>
-                <div className={styles.orderList}>
-                    {
-                        feed.orders.map(order => <OrderCard key={order.number} order={order}/>)
-                    }
-                </div>
+                <OrderList orders={feed.orders}/>
                 <div>
                     <div className={styles.orderByStatus}>
                         <div>

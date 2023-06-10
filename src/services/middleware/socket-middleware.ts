@@ -19,7 +19,7 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
 
         return next => (action) => {
             const { dispatch } = store;
-            const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
+            const { wsInit, wsClose, onOpen, onClose, onError, onMessage, wsSendMessage } = wsActions;
 
             if (wsInit.match(action)) {
                 if (socket) {
@@ -55,7 +55,7 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
                     dispatch(onClose());
                 };
 
-                if (onMessage.match(action)) {
+                if (wsSendMessage && wsSendMessage.match(action)) {
                     const payload = action.payload;
                     // const message = { ...(payload as IMessage), token: user?.token };
                     socket.send(JSON.stringify(payload));

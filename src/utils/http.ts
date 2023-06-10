@@ -79,7 +79,7 @@ const queryEndpoint = async <T = unknown>(url: string,
         if (!token) {
             return Promise.reject("Не авторизирован");
         }
-        headers['Authorization'] = token;
+        headers['Authorization'] = `Bearer ${token}`;
     }
 
     const request: RequestInit = {
@@ -133,7 +133,7 @@ const queryEndpoint = async <T = unknown>(url: string,
 }
 
 export const saveTokens = (response: TTokenResponse) => {
-    localStorage.setItem('token', response.accessToken);
+    localStorage.setItem('token', response.accessToken.replace('Bearer ', ''));
     localStorage.setItem('refreshToken', response.refreshToken);
 }
 

@@ -4,14 +4,6 @@
     grid-template-columns: 600px 600px;
 }
 
-.orderList {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-
-
 .orderByStatus {
     display: grid;
     gap: 24px;
