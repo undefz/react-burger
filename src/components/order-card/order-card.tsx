@@ -1,10 +1,17 @@
 import {TIngredient, TOrder} from "../../utils/burger-prop-types";
 import styles from "./order-card.module.css";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useMemo} from "react";
+import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {useMemo} from "react";
 import {useAppSelector} from "../../services/hooks";
+import {PriceWithMultiplier} from "../price-with-multiplier/price-with-multiplier";
+import {IngredientIcon} from "../ingredient-icon/ingredient-icon";
+import {useNavigate} from "react-router-dom";
+import {useLocation} from "react-router";
 
 export const OrderCard = ({order}: { order: TOrder }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const allIngredients = useAppSelector(state => state.ingredients.items)
 
     const ingredientItems: Array<TIngredient> = useMemo(() => {
@@ -19,8 +26,12 @@ export const OrderCard = ({order}: { order: TOrder }) => {
             .reduce((a, b) => a + b, 0)
     }, [ingredientItems]);
 
+    const onItemClick = () => {
+        navigate(`${order.number}`, {state: {backgroundLocation: location}})
+    }
+
     return (
-        <div className={styles.orderCard}>
+        <div className={styles.orderCard} onClick={onItemClick}>
             <div className={styles.detailsBlock}>
                 <div className={styles.topBlock}>
                     <p className={styles.orderNumber}>#{order.number}</p>
@@ -29,7 +40,7 @@ export const OrderCard = ({order}: { order: TOrder }) => {
                 <p className={styles.orderName}>{order.name}</p>
                 <div className={styles.bottomBlock}>
                     <IngredientStack ingredients={ingredientItems}/>
-                    <OrderPrice price={calculatePrice}/>
+                    <PriceWithMultiplier price={calculatePrice}/>
                 </div>
             </div>
         </div>
@@ -45,24 +56,10 @@ const IngredientStack = ({ingredients}: { ingredients: Array<TIngredient> }) => 
     return <div className={styles.ingredientStack}>
         {
             shownIngredients.map((x, index) =>
-                <IngredientImage key={index} ingredient={x} extraCount={index === 0 ? extraLength : 0}/>
+                <div key={index} className={styles.child}>
+                    <IngredientIcon ingredient={x} extraCount={index === 0 ? extraLength : 0}/>
+                </div>
             )
         }
-    </div>
-}
-
-const IngredientImage = ({ingredient, extraCount}: { ingredient: TIngredient, extraCount: number }) => {
-    return (
-        <div className={styles.child}>
-            <img className={`${styles.circling}`} src={ingredient.image_mobile} alt={ingredient.name}/>
-            {extraCount > 0 && (<p className={styles.imageText}>+{extraCount}</p>)}
-        </div>
-    )
-}
-
-const OrderPrice = ({price}: { price: number }) => {
-    return <div className={styles.priceBlock}>
-        <p>{price}</p>
-        <CurrencyIcon type="primary"/>
     </div>
 }

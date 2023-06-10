@@ -1,0 +1,9 @@
+.priceBlock {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}

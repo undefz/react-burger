@@ -1,5 +1,5 @@
 import {BASE_URL} from "./app-config";
-import {TIngredient, TProfileData} from "./burger-prop-types";
+import {TIngredient, TOrder, TProfileData} from "./burger-prop-types";
 
 type TResponse = {
     success: boolean;
@@ -13,12 +13,12 @@ type TIngredientsResponse = {
     data: Array<TIngredient>;
 }
 
-type TOrder = {
-    number: number;
-}
-
 type TOrderResponse = {
     order: TOrder;
+}
+
+type TOrdersResponse = {
+    orders: Array<TOrder>
 }
 
 export type TTokenResponse = {
@@ -55,7 +55,12 @@ export const queryIngredients = (): Promise<Array<TIngredient>> => {
         .then(res => res.data);
 }
 
-export const queryOrder = (orderIds: Array<string>): Promise<number> => {
+export const queryGetOrder = (id: number): Promise<Array<TOrder>> => {
+    return queryEndpoint<TOrdersResponse>(`/orders/${id}`, undefined, false, 'GET')
+        .then(res => res.orders);
+}
+
+export const queryPostOrder = (orderIds: Array<string>): Promise<number> => {
     return queryEndpoint<TOrderResponse>('/orders', {ingredients: orderIds}, true, 'POST')
         .then(res => res.order.number);
 }

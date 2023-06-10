@@ -41,27 +41,9 @@
     justify-content: space-between;
 }
 
-.priceBlock {
-    display: flex;
-    gap: 8px;
-    align-items: center;
 
-    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
-    composes: text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
-    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
-}
 
-.circling {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
 
-    background:
-            linear-gradient(0, #131316, #131316) padding-box,
-            linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%) border-box;
-    border: 2px solid transparent;
-}
 
 .ingredientStack {
     display: flex;
@@ -79,16 +61,4 @@
 
 .ingredientStack .child:first-child {
     z-index: 0;
-}
-
-.imageText {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 70px;
-    height: 70px;
-    margin-top: -72px;
-    background: #1C1C21;
-    opacity: 0.6;
-    composes: text_type_main-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 }
