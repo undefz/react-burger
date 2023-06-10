@@ -41,6 +41,11 @@
     justify-content: space-between;
 }
 
+.status {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
 
 
 

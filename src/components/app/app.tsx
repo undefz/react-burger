@@ -94,6 +94,9 @@ const App = () => {
                 <Route path="/feed" element={
                     <OrderFeed/>
                 }/>
+                <Route path="/feed/:id" element={
+                    <OrderDetails/>
+                }/>
 
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
@@ -103,17 +106,14 @@ const App = () => {
                     <Route index element={<ProfileEditor/>}/>
                     <Route path='orders' element={<ProfileOrders/>}/>
                 </Route>
+                <Route path="/profile/orders/:id" element={
+                    <OrderDetails/>
+                }/>
 
                 <Route path="/ingredients/:id" element={
                     <IngredientDetails/>
                 }/>
 
-                <Route path="/profile/orders/:id" element={
-                    <OrderDetails/>
-                }/>
-                <Route path="/feed/:id" element={
-                    <OrderDetails/>
-                }/>
 
                 <Route path="*" element={
                     <Page404/>

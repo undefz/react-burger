@@ -20,7 +20,7 @@ export const ProfileOrders = () => {
 
     return (
         <div>
-            <OrderList orders={orderHistory.orders}/>
+            <OrderList orders={orderHistory.orders} showStatus={true}/>
         </div>
     );
 }

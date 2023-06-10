@@ -7,8 +7,9 @@ import {PriceWithMultiplier} from "../price-with-multiplier/price-with-multiplie
 import {IngredientIcon} from "../ingredient-icon/ingredient-icon";
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
+import {getStatusName} from "../../utils/utils";
 
-export const OrderCard = ({order}: { order: TOrder }) => {
+export const OrderCard = ({order, showStatus}: { order: TOrder, showStatus: boolean }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -30,6 +31,8 @@ export const OrderCard = ({order}: { order: TOrder }) => {
         navigate(`${order.number}`, {state: {backgroundLocation: location}})
     }
 
+    const status = getStatusName(order.status)
+
     return (
         <div className={styles.orderCard} onClick={onItemClick}>
             <div className={styles.detailsBlock}>
@@ -38,6 +41,7 @@ export const OrderCard = ({order}: { order: TOrder }) => {
                     <FormattedDate className={styles.date} date={new Date(order.createdAt)}/>
                 </div>
                 <p className={styles.orderName}>{order.name}</p>
+                {showStatus && <p className={styles.status}>{status}</p>}
                 <div className={styles.bottomBlock}>
                     <IngredientStack ingredients={ingredientItems}/>
                     <PriceWithMultiplier price={calculatePrice}/>

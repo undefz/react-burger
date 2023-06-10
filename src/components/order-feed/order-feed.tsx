@@ -27,7 +27,7 @@ export const OrderFeed = () => {
         <>
             <h1 className={`${styles.sectionHeader} mt-10 mb-4`}>Лента заказов</h1>
             <div className={styles.orderView}>
-                <OrderList orders={feed.orders}/>
+                <OrderList orders={feed.orders} showStatus={false}/>
                 <div>
                     <div className={styles.orderByStatus}>
                         <div>

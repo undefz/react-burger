@@ -18,3 +18,16 @@ export const calculateCount = (basket: TBasket, item: TIngredient) => {
     }
     return basket.items.filter(e => e._id === item._id).length;
 }
+
+export const getStatusName = (name: string):string => {
+    if (name === 'created') {
+        return 'Создан'
+    }
+    if (name === 'pending') {
+        return 'Готовится'
+    }
+    if (name === 'done') {
+        return 'Готов'
+    }
+    return ''
+}

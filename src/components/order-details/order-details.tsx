@@ -7,6 +7,7 @@ import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components"
 import {useParams} from "react-router";
 import styles from "./order-details.module.css"
 import {queryGetOrder} from "../../utils/http";
+import {getStatusName} from "../../utils/utils";
 
 
 type TOrderDetailsParams = {
@@ -69,7 +70,7 @@ export const OrderDetails = () => {
         return null
     }
 
-    const status = order.status === 'done' ? 'Выполнен' : 'Готовится'
+    const status = getStatusName(order.status)
 
     return (
         <div>
