@@ -17,7 +17,7 @@ export const orderHistorySlice = createSlice({
         reducers: {},
         extraReducers: builder => {
             builder.addCase(WS_GET_ORDERS, (state, action) => {
-                state.orders = action.payload.orders
+                state.orders = action.payload.orders.reverse()
             })
         }
     }

@@ -45,7 +45,7 @@ const IngredientStack = ({ingredients}: { ingredients: Array<TIngredient> }) => 
     return <div className={styles.ingredientStack}>
         {
             shownIngredients.map((x, index) =>
-                <IngredientImage ingredient={x} extraCount={index === 0 ? extraLength : 0}/>
+                <IngredientImage key={index} ingredient={x} extraCount={index === 0 ? extraLength : 0}/>
             )
         }
     </div>

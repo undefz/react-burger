@@ -34,7 +34,7 @@ export const OrderFeed = () => {
                             <p className={styles.statusTitle}>Готовы:</p>
                             <div className={styles.orderNumbers}>
                                 {
-                                    doneOrders.map(orderId => (<p className={styles.orderNumberDone}>{orderId}</p>))
+                                    doneOrders.map(orderId => (<p key={orderId} className={styles.orderNumberDone}>{orderId}</p>))
                                 }
                             </div>
                         </div>
@@ -42,7 +42,7 @@ export const OrderFeed = () => {
                             <p className={styles.statusTitle}>В работе:</p>
                             <div className={styles.orderNumbers}>
                                 {
-                                    preparingOrders.map(orderId => (<p className={styles.orderNumberProgress}>{orderId}</p>))
+                                    preparingOrders.map(orderId => (<p key={orderId} className={styles.orderNumberProgress}>{orderId}</p>))
                                 }
                             </div>
                         </div>

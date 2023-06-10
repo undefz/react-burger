@@ -20,9 +20,7 @@ export const feedSlice = createSlice({
         reducers: {},
         extraReducers: builder => {
             builder.addCase(WS_GET_ORDERS, (state, action) => {
-                const newOrders = action.payload.orders;
-                console.log(`Новые заказы: ${JSON.stringify(newOrders)}`);
-                state.orders = newOrders;
+                state.orders = action.payload.orders;
                 state.total = action.payload.total
                 state.totalToday = action.payload.totalToday
             })
