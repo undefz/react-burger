@@ -1,19 +1,19 @@
 import styles from "./common-styles.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import {queryResetPassword} from "../utils/http";
-import {useDispatch} from "react-redux";
 import {unsetResettingPassword} from "../services/reducers/user";
+import {useAppDispatch} from "../services/hooks";
 
 export const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const submitResetPassword = (e) => {
+    const submitResetPassword = (e: FormEvent) => {
         e.preventDefault();
         queryResetPassword(password, token)
             .then(() => {

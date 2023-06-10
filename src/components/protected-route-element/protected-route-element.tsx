@@ -1,11 +1,14 @@
 import {Navigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import React from "react";
+import React, {ReactElement} from "react";
 import {useLocation} from "react-router";
-import PropTypes from "prop-types";
+import {useAppSelector} from "../../services/hooks";
 
-export const ProtectedRouteElement = ({checkAuth = true, element}) => {
-    const { isAuthed } = useSelector(state => state.user);
+type TProtectedRouteProps = {
+    checkAuth?: boolean;
+    element: ReactElement;
+}
+export const ProtectedRouteElement = ({checkAuth = true, element}: TProtectedRouteProps) => {
+    const { isAuthed } = useAppSelector(state => state.user);
     const location = useLocation()
 
 
@@ -18,9 +21,4 @@ export const ProtectedRouteElement = ({checkAuth = true, element}) => {
             return element;
         }
     }
-}
-
-ProtectedRouteElement.propTypes = {
-    checkAuth: PropTypes.bool,
-    element: PropTypes.element
 }

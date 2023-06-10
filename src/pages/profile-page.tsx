@@ -1,9 +1,9 @@
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import profileStyles from './profile-page-styles.module.css'
-import {useDispatch} from "react-redux";
 import {logout} from "../services/actions/user";
+import {useAppDispatch} from "../services/hooks";
 export const ProfilePage = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const clickLogout = () => {
         dispatch(logout());

@@ -1,13 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {makeOrder} from "../actions/order-details";
 
+type TOrderDetailsState = {
+    orderId: number|null;
+    isLoading: boolean;
+    isFailed: boolean;
+}
+
+const initialState: TOrderDetailsState = {
+    orderId: null,
+    isLoading: false,
+    isFailed: false,
+};
+
 export const orderDetailsSlice = createSlice({
     name: 'orderDetails',
-    initialState: {
-        orderId: null,
-        isLoading: false,
-        isFailed: false,
-    },
+    initialState,
     reducers: {
         closeModal: (state) => {
             state.orderId = null;
@@ -22,7 +30,7 @@ export const orderDetailsSlice = createSlice({
             state.isLoading = true;
             state.isFailed = false;
         }).addCase(makeOrder.rejected, state => {
-            state.orderId = '';
+            state.orderId = null;
             state.isLoading = false;
             state.isFailed = true;
         })

@@ -1,10 +1,10 @@
 import styles from "./ingredient-details.module.css"
-import {useSelector} from "react-redux";
 import {useParams} from "react-router";
+import {useAppSelector} from "../../services/hooks";
 
 const IngredientDetails = () => {
     const {id} = useParams();
-    const ingredient = useSelector(state => state.ingredients.items).find(x => x._id === id);
+    const ingredient = useAppSelector(state => state.ingredients.items).find(x => x._id === id);
 
     if (!ingredient) {
         return <></>;
@@ -25,7 +25,12 @@ const IngredientDetails = () => {
     );
 }
 
-const IngredientField = ({name, value}) => {
+type TIngredientFieldProps = {
+    name: string;
+    value: number;
+}
+
+const IngredientField = ({name, value}: TIngredientFieldProps) => {
     return (
         <div className={styles.ingredientField}>
             <p className={styles.ingredientFieldDescription}>{name}</p>

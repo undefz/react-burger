@@ -1,14 +1,17 @@
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredients-item.module.css"
 import React from "react";
-import {INGREDIENT} from "../../../utils/burger-prop-types";
-import PropTypes from "prop-types";
 import {useDrag} from "react-dnd";
 import {ITEM_TYPES} from "../../../utils/app-config";
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
+import {TIngredient} from "../../../utils/burger-prop-types";
 
-export const IngredientItem = ({item, count}) => {
+type TIngredientItemProps = {
+    item: TIngredient;
+    count: number;
+}
+export const IngredientItem = ({item, count}: TIngredientItemProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -35,9 +38,4 @@ export const IngredientItem = ({item, count}) => {
             <p className={styles.itemName}>{item.name}</p>
         </div>
     )
-}
-
-IngredientItem.propTypes = {
-    item: INGREDIENT.isRequired,
-    count: PropTypes.number.isRequired
 }

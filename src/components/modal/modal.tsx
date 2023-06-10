@@ -1,16 +1,18 @@
-import React from "react";
+import React, {ReactElement} from "react";
 import ReactDOM from "react-dom";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modal.module.css"
-import {CHILDREN} from "../../utils/burger-prop-types";
-import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("modal-root");
 
-const Modal = ({children, closeModal}) => {
+type TModalProps = {
+    children: ReactElement;
+    closeModal: (arg?: unknown) => void;
+}
+const Modal = ({children, closeModal}: TModalProps) => {
     const handleKeydown = React.useCallback(
-        (keydownEvent) => {
+        (keydownEvent: KeyboardEvent) => {
             if (keydownEvent.key === "Escape") {
                 closeModal();
             }
@@ -22,6 +24,10 @@ const Modal = ({children, closeModal}) => {
         document.addEventListener("keydown", handleKeydown);
         return () => document.removeEventListener("keydown", handleKeydown);
     }, [closeModal, handleKeydown]);
+
+    if (!modalRoot) {
+        throw new Error("No modal root found")
+    }
 
     return ReactDOM.createPortal(
         (
@@ -37,11 +43,6 @@ const Modal = ({children, closeModal}) => {
         ),
         modalRoot
     );
-}
-
-Modal.propTypes = {
-    children: CHILDREN,
-    closeModal: PropTypes.func.isRequired
 }
 
 export default Modal;

@@ -1,26 +1,27 @@
-import React, {useMemo, useRef } from "react";
+import React, {useMemo, useRef} from "react";
 import styles from "./burger-constructor.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import {useDispatch, useSelector} from "react-redux";
-import {useDrop} from "react-dnd";
+import {DropTargetMonitor, useDrop} from "react-dnd";
 import {ITEM_TYPES, TYPE_BUN} from "../../utils/app-config";
 import {addIngredient, moveIngredient, removeIngredient, selectBun} from "../../services/reducers/burger-constructor";
 import {makeOrder} from "../../services/actions/order-details";
 import {closeModal} from "../../services/reducers/order-details";
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../services/hooks";
+import {TIngredient} from "../../utils/burger-prop-types";
 
 export const BurgerConstructor = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const basket = useSelector(state => state.basket.items);
-    const bun = useSelector(state => state.basket.bun);
-    const user = useSelector(state => state.user);
+    const basket = useAppSelector(state => state.basket.items);
+    const bun = useAppSelector(state => state.basket.bun);
+    const user = useAppSelector(state => state.user);
     const navigate = useNavigate();
 
-    const orderDetails = useSelector(state => state.orderDetails);
+    const orderDetails = useAppSelector(state => state.orderDetails);
 
     const onButtonClick = () => {
         console.log(`USER ${JSON.stringify(user)}`)
@@ -44,7 +45,7 @@ export const BurgerConstructor = () => {
         return basket.map(e => e.price).reduce((a, b) => a + b, 0) + (bun ? bun.price * 2 : 0);
     }, [basket, bun]);
 
-    const [, dropTargetRef] = useDrop({
+    const [, dropTargetRef] = useDrop<TIngredient>({
         accept: [ITEM_TYPES.INGREDIENT_CARD, ITEM_TYPES.CONSTRUCTOR_CARD],
         drop(item, monitor) {
             if (monitor.getItemType() === ITEM_TYPES.INGREDIENT_CARD) {
@@ -55,8 +56,8 @@ export const BurgerConstructor = () => {
         },
     });
 
-    const handleDropIngredient = (item) => {
-        const { type } = item;
+    const handleDropIngredient = (item: TIngredient) => {
+        const {type} = item;
 
         switch (type) {
             case TYPE_BUN: {
@@ -70,43 +71,54 @@ export const BurgerConstructor = () => {
         }
     }
 
-    const ingredientsRef = useRef();
-    const handleDropConstructor = (item, monitor) => {
-        const sign = Math.sign(monitor.getDifferenceFromInitialOffset().y);
-        if (sign !== 0) {
-            let shift = 0;
+    const ingredientsRef = useRef<HTMLDivElement>(null);
+    const handleDropConstructor = (item: TIngredient, monitor: DropTargetMonitor) => {
+        const differenceFromInitialOffset = monitor.getDifferenceFromInitialOffset();
+        const initialSourceClientOffset = monitor.getInitialSourceClientOffset();
+        const sourceClientOffset = monitor.getSourceClientOffset();
 
-            const fromY = monitor.getInitialSourceClientOffset().y * sign;
-            const toY = monitor.getSourceClientOffset().y * sign;
+        const current = ingredientsRef.current;
 
-            for (const element of ingredientsRef.current.children) {
-                const y = element.getBoundingClientRect().y * sign;
-                if (y > fromY && y < toY) {
-                    shift += sign;
+        if (differenceFromInitialOffset && initialSourceClientOffset && sourceClientOffset && current) {
+            const sign = Math.sign(differenceFromInitialOffset.y);
+            if (sign !== 0) {
+                let shift = 0;
+
+                const fromY = initialSourceClientOffset.y * sign;
+                const toY = sourceClientOffset.y * sign;
+
+                for (const element of current.children) {
+                    const y = element.getBoundingClientRect().y * sign;
+                    if (y > fromY && y < toY) {
+                        shift += sign;
+                    }
                 }
-            }
 
-            if (shift !== 0) {
-                dispatch(moveIngredient({item, shift}));
+                if (shift !== 0) {
+                    dispatch(moveIngredient({item, shift}));
+                }
             }
         }
     }
 
-    const handleClose = (uuid) => {
-        dispatch(removeIngredient(uuid))
+    const handleClose = (uuid?: string) => {
+        if (uuid) {
+            dispatch(removeIngredient(uuid))
+        }
     }
 
     return (
         <div className="mt-25" ref={dropTargetRef}>
             <section className={`${styles.mainConstructor}`}>
-                { bun && <ConstructorIngredient ingredient={bun} type="top" extraClass="ml-8"/> }
+                {bun && <ConstructorIngredient ingredient={bun} type="top" extraClass="ml-8"/>}
                 <div className={styles.scrollable} ref={ingredientsRef}>
                     {
                         basket.map(e => (
-                            <ConstructorIngredient key={e.uuid} ingredient={e} handleClose={() => handleClose(e.uuid)}/>))
+                            <ConstructorIngredient key={e.uuid} ingredient={e}
+                                                   handleClose={() => handleClose(e.uuid)}/>))
                     }
                 </div>
-                { bun && <ConstructorIngredient ingredient={bun} type="bottom" extraClass="ml-8"/> }
+                {bun && <ConstructorIngredient ingredient={bun} type="bottom" extraClass="ml-8"/>}
             </section>
             <div className={`${styles.orderBlock} mt-10`}>
                 <div className={styles.price}>

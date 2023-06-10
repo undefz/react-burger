@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import AppHeader from "../app-header/app-header";
 import styles from "./app.module.css";
-import {useDispatch, useSelector} from "react-redux";
 import {fetchIngredients} from "../../services/actions/burger-ingredients";
 import {Route, Routes, useLocation} from "react-router";
 import {RegisterPage} from "../../pages/register-page";
@@ -18,15 +17,16 @@ import {useNavigate} from "react-router-dom";
 import {authUser} from "../../services/actions/user";
 import {ProfileEditor} from "../profile-editor/profile-editor";
 import {ProfileOrders} from "../profile-orders/profile-orders";
+import {useAppDispatch, useAppSelector} from "../../services/hooks";
 
 const App = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const location = useLocation();
     const state = location.state;
 
-    const user = useSelector(state => state.user);
+    const user = useAppSelector(state => state.user);
 
     useEffect(() => {
         console.log('Page navigated to: ', location.pathname);
@@ -42,7 +42,7 @@ const App = () => {
         }
     }, [dispatch, user.isAuthed]);
 
-    const {isLoading, hasError} = useSelector(state => state.ingredients);
+    const {isLoading, hasError} = useAppSelector(state => state.ingredients);
 
     const onModalClose = () => {
         console.log("Navigating from modal close");
