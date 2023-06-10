@@ -1,7 +1,7 @@
 import doneImagePath from "../../images/done.svg"
-import styles from "./order-details.module.css"
+import styles from "./order-result.module.css"
 import {useAppSelector} from "../../services/hooks";
-const OrderDetails = () => {
+const OrderResult = () => {
     const orderId = useAppSelector(state => state.orderDetails.orderId)
 
     return (
@@ -15,4 +15,4 @@ const OrderDetails = () => {
     );
 }
 
-export default OrderDetails;
+export default OrderResult;

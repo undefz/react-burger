@@ -2,7 +2,7 @@ import React, {useMemo, useRef} from "react";
 import styles from "./burger-constructor.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorIngredient from "./constructor-ingredient/constructor-ingredient";
-import OrderDetails from "../order-details/order-details";
+import OrderResult from "../order-result/order-result";
 import Modal from "../modal/modal";
 import {DropTargetMonitor, useDrop} from "react-dnd";
 import {ITEM_TYPES, TYPE_BUN} from "../../utils/app-config";
@@ -130,7 +130,7 @@ export const BurgerConstructor = () => {
             {
                 orderDetails.orderId && (
                     <Modal closeModal={onModalClose}>
-                        <OrderDetails/>
+                        <OrderResult/>
                     </Modal>
                 )
             }
