@@ -13,6 +13,10 @@ import {getStatusName} from "../../utils/utils";
 type TOrderDetailsParams = {
     id: string
 }
+
+type GroupedIngredients = {
+    [key: string]: [TIngredient, number]
+}
 export const OrderDetails = () => {
     const {id} = useParams<TOrderDetailsParams>();
 
@@ -34,10 +38,6 @@ export const OrderDetails = () => {
                 .catch(e => console.log(`Ошибочка ${e}`))
         }
     }, [id])
-
-    type GroupedIngredients = {
-        [key: string]: [TIngredient, number]
-    }
 
     const ingredientItems: Array<TIngredient> = useMemo(() => {
         if (!order) {

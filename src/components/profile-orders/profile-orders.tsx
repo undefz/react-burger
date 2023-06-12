@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
 import {orderHistoryActions} from "../../services/actions/order-history";
 import {OrderList} from "../order-list/order-list";
+import {WSS_URL} from "../../utils/app-config";
 
 export const ProfileOrders = () => {
     const dispatch = useAppDispatch();
@@ -10,7 +11,7 @@ export const ProfileOrders = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        const url = `wss://norma.nomoreparties.space/orders?token=${token}`
+        const url = `${WSS_URL}/orders?token=${token}`
 
         dispatch(orderHistoryActions.wsInit(url))
         return () => {

@@ -3,11 +3,12 @@ import {useAppDispatch, useAppSelector} from "../../services/hooks";
 import {feedActions} from "../../services/actions/feed";
 import styles from "./order-feed.module.css"
 import {OrderList} from "../order-list/order-list";
+import {WSS_URL} from "../../utils/app-config";
 
 export const OrderFeed = () => {
     const dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(feedActions.wsInit('wss://norma.nomoreparties.space/orders/all'))
+        dispatch(feedActions.wsInit(`${WSS_URL}/orders/all`))
         return () => {
             dispatch(feedActions.wsClose())
         }
