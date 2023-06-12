@@ -5,17 +5,29 @@ import {ingredientsSlice} from "./reducers/burger-ingredients";
 import {constructorSlice} from "./reducers/burger-constructor";
 import {orderDetailsSlice} from "./reducers/order-details";
 import {userSlice} from "./reducers/user";
+import {socketMiddleware} from "./middleware/socket-middleware";
+import {feedActions} from "./actions/feed";
+import {feedSlice} from "./reducers/feed";
+import {orderHistorySlice} from "./reducers/order-history";
+import {orderHistoryActions} from "./actions/order-history";
 
 const rootReducer = combineReducers({
     ingredients: ingredientsSlice.reducer,
     basket: constructorSlice.reducer,
     orderDetails: orderDetailsSlice.reducer,
-    user: userSlice.reducer
+    user: userSlice.reducer,
+    feed: feedSlice.reducer,
+    orderHistory: orderHistorySlice.reducer
 })
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: defaultMiddleware => defaultMiddleware().concat([thunk, logger]),
+    middleware: defaultMiddleware => defaultMiddleware().concat(
+        thunk,
+        logger,
+        socketMiddleware(feedActions),
+        socketMiddleware(orderHistoryActions)
+    ),
     devTools: process.env.NODE_ENV !== 'production'
 })
 

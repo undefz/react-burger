@@ -1,5 +1,5 @@
 import {BASE_URL} from "./app-config";
-import {TIngredient, TProfileData} from "./burger-prop-types";
+import {TIngredient, TOrder, TProfileData} from "./burger-prop-types";
 
 type TResponse = {
     success: boolean;
@@ -13,12 +13,12 @@ type TIngredientsResponse = {
     data: Array<TIngredient>;
 }
 
-type TOrder = {
-    number: number;
-}
-
 type TOrderResponse = {
     order: TOrder;
+}
+
+type TOrdersResponse = {
+    orders: Array<TOrder>
 }
 
 export type TTokenResponse = {
@@ -55,8 +55,13 @@ export const queryIngredients = (): Promise<Array<TIngredient>> => {
         .then(res => res.data);
 }
 
-export const queryOrder = (orderIds: Array<string>): Promise<number> => {
-    return queryEndpoint<TOrderResponse>('/orders', {ingredients: orderIds}, false, 'POST')
+export const queryGetOrder = (id: number): Promise<Array<TOrder>> => {
+    return queryEndpoint<TOrdersResponse>(`/orders/${id}`, undefined, false, 'GET')
+        .then(res => res.orders);
+}
+
+export const queryPostOrder = (orderIds: Array<string>): Promise<number> => {
+    return queryEndpoint<TOrderResponse>('/orders', {ingredients: orderIds}, true, 'POST')
         .then(res => res.order.number);
 }
 
@@ -79,7 +84,7 @@ const queryEndpoint = async <T = unknown>(url: string,
         if (!token) {
             return Promise.reject("Не авторизирован");
         }
-        headers['Authorization'] = token;
+        headers['Authorization'] = `Bearer ${token}`;
     }
 
     const request: RequestInit = {
@@ -133,7 +138,7 @@ const queryEndpoint = async <T = unknown>(url: string,
 }
 
 export const saveTokens = (response: TTokenResponse) => {
-    localStorage.setItem('token', response.accessToken);
+    localStorage.setItem('token', response.accessToken.replace('Bearer ', ''));
     localStorage.setItem('refreshToken', response.refreshToken);
 }
 

@@ -1,0 +1,56 @@
+.orderView {
+    display: grid;
+    gap: 60px;
+    grid-template-columns: 600px 600px;
+}
+
+.orderByStatus {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 2fr 1fr;
+}
+
+.orderNumbers {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(10, auto);
+    grid-auto-flow: column;
+}
+
+.statusTitle {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.header {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.orderNumberDone {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_success from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.orderNumberProgress {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.statisticNumberBig {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_digits-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_color_primary from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+    text-shadow: 0 0 16px rgba(51, 51, 255, 0.25), 0 0 8px rgba(51, 51, 255, 0.25), 0 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+
+.sectionHeader {
+    composes: text from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}

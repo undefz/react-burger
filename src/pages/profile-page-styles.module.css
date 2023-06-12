@@ -1,7 +1,9 @@
 .profileContainer {
     margin-top: 60px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
     gap: 60px;
+    width: 1020px;
 }
 
 .linksContainer {

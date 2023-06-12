@@ -1,7 +1,7 @@
 import {TIngredientType} from "./burger-prop-types";
 
 export const BASE_URL = "https://norma.nomoreparties.space/api";
-
+export const WSS_URL = "wss://norma.nomoreparties.space"
 export const TYPE_BUN: TIngredientType = "bun";
 export const TYPE_SAUCE: TIngredientType = "sauce";
 export const TYPE_MAIN: TIngredientType = "main";

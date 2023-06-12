@@ -18,6 +18,8 @@ import {authUser} from "../../services/actions/user";
 import {ProfileEditor} from "../profile-editor/profile-editor";
 import {ProfileOrders} from "../profile-orders/profile-orders";
 import {useAppDispatch, useAppSelector} from "../../services/hooks";
+import {OrderFeed} from "../order-feed/order-feed";
+import {OrderDetails} from "../order-details/order-details";
 
 const App = () => {
     const dispatch = useAppDispatch();
@@ -89,6 +91,13 @@ const App = () => {
                     )
                 }
 
+                <Route path="/feed" element={
+                    <OrderFeed/>
+                }/>
+                <Route path="/feed/:id" element={
+                    <OrderDetails/>
+                }/>
+
                 <Route path="/profile" element={
                     <ProtectedRouteElement element={
                         <ProfilePage/>
@@ -97,10 +106,14 @@ const App = () => {
                     <Route index element={<ProfileEditor/>}/>
                     <Route path='orders' element={<ProfileOrders/>}/>
                 </Route>
+                <Route path="/profile/orders/:id" element={
+                    <OrderDetails/>
+                }/>
 
                 <Route path="/ingredients/:id" element={
                     <IngredientDetails/>
                 }/>
+
 
                 <Route path="*" element={
                     <Page404/>
@@ -110,12 +123,22 @@ const App = () => {
             {
                 state?.backgroundLocation &&
                 <Routes>
-                <Route path="/ingredients/:id" element={
-                    <Modal closeModal={onModalClose}>
-                        <IngredientDetails/>
-                    </Modal>
-                }/>
-            </Routes>
+                    <Route path="/ingredients/:id" element={
+                        <Modal closeModal={onModalClose}>
+                            <IngredientDetails/>
+                        </Modal>
+                    }/>
+                    <Route path="/profile/orders/:id" element={
+                        <Modal closeModal={onModalClose}>
+                            <OrderDetails/>
+                        </Modal>
+                    }/>
+                    <Route path="/feed/:id" element={
+                        <Modal closeModal={onModalClose}>
+                            <OrderDetails/>
+                        </Modal>
+                    }/>
+                </Routes>
             }
         </div>
     );

@@ -1,0 +1,9 @@
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+}

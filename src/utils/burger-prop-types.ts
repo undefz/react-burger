@@ -28,3 +28,17 @@ export type TProfileData = {
     email: string;
     password?: string;
 }
+
+export type TOrder = {
+    ingredients: Array<string>;
+    _id: string;
+    name: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export type TOrderList = {
+    orders: Array<TOrder>;
+}
