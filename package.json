@@ -55,10 +55,12 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://undefz.github.io/react-burger",
+  "homepage": "./react-burger",
   "devDependencies": {
     "@types/redux-logger": "^3.0.9",
     "@types/uuid": "^9.0.1",
+    "cypress": "^12.14.0",
+    "eslint-plugin-cypress": "^2.13.3",
     "fetch-mock": "^9.11.0",
     "gh-pages": "^5.0.0",
     "jest": "^27.5.1",

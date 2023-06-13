@@ -5,7 +5,7 @@ import {TOrder} from "../../utils/burger-prop-types";
 describe('Feed reducers', () => {
     const reducer = feedSlice.reducer;
     it('should return the initial state', () => {
-        expect(reducer(undefined, {'type': 'test'})).toEqual(
+        expect(reducer(undefined, {type: 'test'})).toEqual(
             {
                 orders: [],
                 total: 0,
