@@ -67,7 +67,9 @@ describe('order works', () => {
         cy.visit('http://localhost:3000/login')
 
         cy.get('[type=email]').type(`test@test.com`)
-        cy.get('[type=password]').type(`testtesttest{enter}`)
+        cy.get('[type=password]').type(`testtesttest`)
+
+        cy.get('[type=submit]').click()
 
         cy.wait("@postLogin")
 

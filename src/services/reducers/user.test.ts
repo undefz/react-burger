@@ -1,5 +1,5 @@
 import {setResettingPassword, unsetResettingPassword, userSlice} from "./user";
-import {authUser, login, logout, register} from "../actions/user";
+import {login, logout, register} from "../actions/user";
 import {TTokenResponse, TUserResponse} from "../../utils/http";
 
 describe('User reducers', () => {
