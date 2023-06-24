@@ -19,7 +19,7 @@ export const IngredientsList = React.forwardRef<HTMLDivElement, TIngredientsList
 
     return (<div ref={ref}>
         <h2 className={styles.ingredientsHeader}>{header}</h2>
-        <div className={styles.ingredientsGrid}>
+        <div className={styles.ingredientsGrid} data-testid="ingredients-list">
             {
                 ingredientCount.map(([item, count]) => (<IngredientItem key={item._id} item={item} count={count}/>))
             }

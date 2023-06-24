@@ -108,7 +108,7 @@ export const BurgerConstructor = () => {
     }
 
     return (
-        <div className="mt-25" ref={dropTargetRef}>
+        <div className="mt-25" ref={dropTargetRef} data-testid="burgerConstructor">
             <section className={`${styles.mainConstructor}`}>
                 {bun && <ConstructorIngredient ingredient={bun} type="top" extraClass="ml-8"/>}
                 <div className={styles.scrollable} ref={ingredientsRef}>
@@ -125,7 +125,7 @@ export const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium">{total}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={onButtonClick}>Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="large" onClick={onButtonClick} data-testid="orderButton">Оформить заказ</Button>
             </div>
             {
                 orderDetails.orderId && (

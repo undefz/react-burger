@@ -17,7 +17,7 @@ const ConstructorIngredient = ({ingredient, type, extraClass, handleClose}: TCon
 
     const isLocked = type === "top" || type === "bottom";
 
-    const [{ isDragging }, dragRef] = useDrag({
+    const [{isDragging}, dragRef] = useDrag({
         type: ITEM_TYPES.CONSTRUCTOR_CARD,
         item: () => ingredient,
         collect: (monitor) => ({
@@ -26,12 +26,14 @@ const ConstructorIngredient = ({ingredient, type, extraClass, handleClose}: TCon
     });
 
     return (
-        <div className={`${styles.constructorIngredient} ${extraClass} ${isDragging ? styles.drag : ''}`} ref={dragRef}>
+        <div className={`${styles.constructorIngredient} ${extraClass} ${isDragging ? styles.drag : ''}`}
+             ref={dragRef}
+             data-testid="constructorElement">
             {!isLocked && <DragIcon type="primary"/>}
             <ConstructorElement text={name} thumbnail={ingredient.image} price={ingredient.price} isLocked={isLocked}
                                 type={type} handleClose={handleClose}/>
         </div>
-        );
+    );
 
 }
 

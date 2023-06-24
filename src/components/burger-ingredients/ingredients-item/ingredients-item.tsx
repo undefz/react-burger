@@ -15,9 +15,12 @@ export const IngredientItem = ({item, count}: TIngredientItemProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [, dragRef] = useDrag({
+    const [{isDragging}, dragRef] = useDrag({
         type: ITEM_TYPES.INGREDIENT_CARD,
         item: item,
+        collect: monitor => ({
+            isDragging: monitor.isDragging(),
+        }),
     });
 
     const onItemClick = () => {
@@ -25,7 +28,7 @@ export const IngredientItem = ({item, count}: TIngredientItemProps) => {
     }
 
     return (
-        <div className={styles.item} onClick={onItemClick} ref={dragRef}>
+        <div className={`${styles.item} ${isDragging ? styles.drag : ''}`} onClick={onItemClick} ref={dragRef}>
             {
                 count > 0 ? <Counter extraClass= {styles.counter} count={count}/> : null
             }
