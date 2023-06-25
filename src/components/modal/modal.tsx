@@ -32,10 +32,10 @@ const Modal = ({children, closeModal}: TModalProps) => {
     return ReactDOM.createPortal(
         (
             <ModalOverlay closeModal={closeModal}>
-                <div className={`${styles.modal}`} onClick={e => e.stopPropagation()}>
+                <div className={`${styles.modal}`} onClick={e => e.stopPropagation()} data-testid="modal">
                     {children}
 
-                    <div className={styles.closeButton}>
+                    <div className={styles.closeButton} data-testid="close-modal">
                         <CloseIcon type="primary" onClick={closeModal}/>
                     </div>
                 </div>
