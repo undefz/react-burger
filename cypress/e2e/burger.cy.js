@@ -1,10 +1,12 @@
+import {INGREDIENTS_URL, LOGIN_URL, ORDER_URL} from "./test-constants";
+
 describe('service is available', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000')
+        cy.visit('/')
         cy.get('[data-testid=ingredients-list').children('div').as('ingredientList')
     })
 
-    it('should be available at port 3000', () => {
+    it('should be available', () => {
         cy.get('@ingredientList').should('exist')
     })
 
@@ -15,7 +17,7 @@ describe('service is available', () => {
 
 describe('ingredient modal works', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000')
+        cy.visit('/')
         cy.get('[data-testid=ingredients-list').children('div').as('ingredientList')
 
         cy.get('@ingredientList').eq(0).as('testIngredient')
@@ -41,7 +43,7 @@ describe('ingredient modal works', () => {
 
 describe('drag works', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000')
+        cy.visit('/')
         cy.get('[data-testid=ingredients-list').children('div').as('ingredientList')
     })
 
@@ -57,14 +59,14 @@ describe('drag works', () => {
 
 describe('order works', () => {
     beforeEach(() => {
-        cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {fixture: 'ingredients.json'})
+        cy.intercept('GET', INGREDIENTS_URL, {fixture: 'ingredients.json'})
 
-        cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/login', {
+        cy.intercept('POST', LOGIN_URL, {
             fixture: 'user.json'
         }).as('postLogin')
 
 
-        cy.visit('http://localhost:3000/login')
+        cy.visit('/login')
 
         cy.get('[type=email]').type(`test@test.com`)
         cy.get('[type=password]').type(`testtesttest`)
@@ -79,7 +81,7 @@ describe('order works', () => {
         cy.get('@ingredientList').eq(0).trigger('dragstart', {dataTransfer})
         cy.get('[data-testid=burgerConstructor]').trigger('drop', {dataTransfer})
 
-        cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {fixture: 'order.json'})
+        cy.intercept('POST', ORDER_URL, {fixture: 'order.json'})
         cy.get('[data-testid=orderButton]').click()
     })
 

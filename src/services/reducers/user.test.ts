@@ -1,6 +1,7 @@
 import {setResettingPassword, unsetResettingPassword, userSlice} from "./user";
-import {login, logout, register} from "../actions/user";
+import {authUser, login, logout, register} from "../actions/user";
 import {TTokenResponse, TUserResponse} from "../../utils/http";
+import {TProfileData} from "../../utils/burger-prop-types";
 
 describe('User reducers', () => {
     const reducer = userSlice.reducer;
@@ -97,6 +98,19 @@ describe('User reducers', () => {
         expect(reducer(state, logout.fulfilled)).toEqual({
             user: null,
             isAuthed: false,
+            isAuthFailed: false,
+            isResettingPassword: false
+        })
+    })
+    it('authUser.fulfilled', () => {
+        const profileData: TProfileData = {
+            name: 'test',
+            email: 'test@test.com'
+        }
+
+        expect(reducer(undefined, authUser.fulfilled(profileData, '', undefined))).toEqual({
+            user: profileData,
+            isAuthed: true,
             isAuthFailed: false,
             isResettingPassword: false
         })
